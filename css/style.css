@@ -1,0 +1,575 @@
+@import url('https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* =========================================
+   BASE & RESET
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* =========================================
+   NAVBAR (Compact Style)
+   ========================================= */
+.navbar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+    font-family: 'Bebas Neue', sans-serif;
+    color: #2196F3;
+    z-index: 1001;
+}
+
+.logo img {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #2196F3;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger img {
+    width: 24px;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 30px;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.9rem;
+    width: 150px;
+}
+
+.search-icon {
+    width: 16px;
+    opacity: 0.6;
+}
+
+/* =========================================
+   HERO SECTION (Headline Besar)
+   ========================================= */
+.hero-section {
+    margin: 20px 0;
+}
+
+.hero-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 400px;
+    cursor: pointer;
+}
+
+.hero-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.hero-card:hover img {
+    transform: scale(1.05);
+}
+
+.hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    padding: 30px;
+    color: #fff;
+}
+
+.hero-category {
+    background: #2196F3;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   LAYOUT GRID (Main + Sidebar)
+   ========================================= */
+.main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+/* Section Title */
+.section-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.section-title h2 {
+    font-size: 1.2rem;
+    color: #2196F3;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-right: 15px;
+}
+
+.title-line {
+    flex-grow: 1;
+    height: 3px;
+    background: #2196F3;
+}
+
+/* News List (Left Column) */
+.news-item {
+    display: flex;
+    gap: 15px;
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.news-item:hover {
+    transform: translateX(5px);
+}
+
+.news-thumb {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.news-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    color: #222;
+}
+
+.news-meta {
+    font-size: 0.8rem;
+    color: #888;
+    display: flex;
+    gap: 10px;
+}
+
+.news-cat {
+    color: #2196F3;
+    font-weight: 600;
+}
+
+/* Sidebar (Right Column) */
+.sidebar-list .news-item {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    margin-bottom: 20px;
+}
+
+.sidebar-list .news-thumb {
+    width: 100%;
+    height: 180px;
+}
+
+.sidebar-list .news-info h3 {
+    font-size: 1rem;
+}
+
+.ad-placeholder {
+    background: #e0e0e0;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 30px;
+}
+
+/* =========================================
+   LOAD MORE BUTTON
+   ========================================= */
+.load-more-container {
+    text-align: center;
+    margin-top: 30px;
+    padding-bottom: 40px;
+}
+
+.btn-load-more {
+    background-color: #ffffff;
+    color: #2196F3; /* Biru ala Bola.com */
+    border: 2px solid #2196F3;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-load-more:hover {
+    background-color: #2196F3;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-load-more:disabled {
+    background-color: #eee;
+    border-color: #ddd;
+    color: #999;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* =========================================
+   STYLE HALAMAN DETAIL ARTIKEL (Portal Style)
+   ========================================= */
+
+/* Container Utama Artikel */
+.article-detail {
+    background: #ffffff;
+    max-width: 780px; /* Lebar ideal untuk membaca ala Detik/Bola */
+    margin: 30px auto;
+    padding: 0 20px 40px;
+    position: relative;
+}
+
+/* Header Artikel */
+.article-header {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* Label Kategori (Merah ala Bola.com) */
+.article-category {
+    display: inline-block;
+    color: #2196F3; 
+    border: 1px solid #2196F3;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+/* Judul Artikel Besar */
+.article-title {
+    font-size: 2rem; /* Sekitar 32px */
+    line-height: 1.3;
+    color: #222;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Meta Data (Tanggal/Penulis) */
+.article-meta {
+    font-size: 0.85rem;
+    color: #888;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+/* Gambar Utama (Featured Image) */
+.article-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Caption Gambar (Opsional) */
+.image-caption {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 30px;
+    display: block;
+}
+
+/* Isi Konten Artikel (Typography) */
+.article-content {
+    font-family: 'Georgia', 'Times New Roman', serif; /* Font Serif lebih enak dibaca untuk artikel panjang */
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.8; /* Spasi antar baris lega */
+    color: #333;
+}
+
+/* Styling Tag HTML dari AI */
+.article-content p {
+    margin-bottom: 25px;
+}
+
+.article-content h2 {
+    font-family: 'Segoe UI', sans-serif; /* Heading tetap Sans-Serif */
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.article-content h3 {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #222;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.article-content ul, .article-content ol {
+    margin-left: 20px;
+    margin-bottom: 25px;
+}
+
+.article-content li {
+    margin-bottom: 10px;
+}
+
+.article-content strong {
+    color: #000;
+}
+
+/* Blockquote (Kutipan) */
+.article-content blockquote {
+    border-left: 4px solid #d32f2f;
+    background: #f9f9f9;
+    margin: 30px 0;
+    padding: 20px;
+    font-style: italic;
+    color: #555;
+}
+
+/* Tombol Kembali (Minimalis) */
+.back-to-home {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 50px;
+    padding: 10px 10px;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.back-to-home:hover {
+    border-color: #2196F3;
+}
+
+.back-to-home img {
+    width: 16px;
+    margin-right: 8px;
+}
+
+/* =========================================
+   RESPONSIVE MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+    .article-detail {
+        margin: 0 auto;
+        padding: 0 15px 30px;
+    }
+
+    .article-title {
+        font-size: 1.5rem; /* Lebih kecil di HP */
+    }
+
+    .article-content {
+        font-size: 1rem; /* 16px di HP */
+        line-height: 1.6;
+    }
+    
+    .article-content h2 {
+        font-size: 1.3rem;
+    }
+}
+
+.footer {
+    background: #fff;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.footer-right {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-right img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+   ========================================= */
+.mobile-search-container {
+    display: none;
+    padding: 10px 15px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .desktop-search {
+        display: none;
+    }
+
+    .mobile-search-container {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .content-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-card {
+        height: 250px;
+    }
+
+    .hero-title {
+        font-size: 1.2rem;
+    }
+
+    .news-item {
+        flex-direction: column;
+    }
+
+    .news-thumb {
+        width: 100%;
+        height: 180px;
+    }
+}
