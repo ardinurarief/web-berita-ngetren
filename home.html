@@ -25,13 +25,28 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
             </div>
             <ul class="nav-links" id="nav-menu">
-    <li><a href="home.html" class="active" onclick="filterCategory('all')">Beranda</a></li>
-    <li><a href="home.html?cat=Politik & Pemerintahan">Politik</a></li>
-    <li><a href="home.html?cat=Ekonomi & Bisnis">Bisnis</a></li>
-    <li><a href="home.html?cat=Sains & Teknologi">Tekno</a></li>
-    <li><a href="home.html?cat=Olahraga (Sports)">Bola</a></li>
-    <li><a href="home.html?cat=Gaya Hidup & Hiburan">Lifestyle</a></li>
-           </ul>
+                <li><a href="index.html" onclick="filterCategory('all')">Beranda</a></li>
+
+                <!-- Kategori Utama -->
+                <li><a href="#" onclick="filterCategory('Politik & Pemerintahan')">Politik</a></li>
+                <li><a href="#" onclick="filterCategory('Ekonomi & Bisnis')">Bisnis</a></li>
+                <li><a href="#" onclick="filterCategory('Sains & Teknologi')">Tekno</a></li>
+                <li><a href="#" onclick="filterCategory('Olahraga (Sports)')">Bola</a></li>
+
+                <!-- Dropdown Menu -->
+                <li class="dropdown">
+                    <!-- Tambahkan ID 'dropbtn-lainnya' di sini -->
+                    <a href="#" id="dropbtn-lainnya" class="dropbtn">Lainnya ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="filterCategory('Hukum & Kriminal')">Hukum & Kriminal</a>
+                        <a href="#" onclick="filterCategory('Sosial & Budaya')">Sosial & Budaya</a>
+                        <a href="#" onclick="filterCategory('Internasional')">Internasional</a>
+                        <a href="#" onclick="filterCategory('Gaya Hidup & Hiburan')">Lifestyle</a>
+                        <a href="#" onclick="filterCategory('Pendidikan')">Pendidikan</a>
+                        <a href="#" onclick="filterCategory('Kesehatan')">Kesehatan</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 
