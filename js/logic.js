@@ -69,14 +69,24 @@ async function loadArticles() {
     try {
         const response = await fetch('data/articles.json');
         if (!response.ok) throw new Error('Gagal memuat data');
-        allArticles = await response.json();
         
+        let rawArticles = await response.json();
+        
+        // PENTING: Balik urutan agar artikel TERBARU ada di index 0
+        allArticles = rawArticles.reverse(); 
+
         displayedCount = 0;
+        
+        // 1. Render Hero (Ambil artikel PERTAMA dari daftar yang sudah dibalik = Artikel Terbaru)
         renderHero(allArticles[0]);
+        
+        // 2. Render Sidebar (Ambil 5 artikel setelah headline)
         updateSidebar(1, 5); 
+        
+        // 3. Render Batch Pertama News List
         loadMoreArticles(); 
         
-        // CEK APAKAH ADA FILTER KATEGORI DI URL
+        // Cek filter kategori jika ada
         checkUrlFilter(); 
 
     } catch (error) {
@@ -88,11 +98,14 @@ function renderHero(headline) {
     const heroSection = document.getElementById('hero-section');
     if(!headline || !heroSection) return;
     
+    // Cek apakah gambar ada, jika tidak pakai placeholder
+    const imgUrl = headline.image && headline.image.length > 10 ? headline.image : 'https://via.placeholder.com/800x400?text=No+Image';
+
     heroSection.innerHTML = `
         <div class="hero-card" onclick="window.location.href='article.html?slug=${headline.slug}'">
-            <img src="${headline.image}" alt="${headline.title}">
+            <img src="${imgUrl}" alt="${headline.title}">
             <div class="hero-overlay">
-                <span class="hero-category">${headline.category}</span>
+                <span class="hero-category">${headline.category || 'Umum'}</span>
                 <h1 class="hero-title">${headline.title}</h1>
             </div>
         </div>
