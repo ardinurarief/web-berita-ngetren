@@ -13,24 +13,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function filterCategory(category) {
+    if (category === 'all') {
+        window.location.href = 'index.html';
+    } else {
+        // Encode URI agar spasi dan simbol '&' aman di URL
+        const encodedCat = encodeURIComponent(category);
+        window.location.href = `home.html?cat=${encodedCat}`;
+    }
+}
+
 // Fungsi untuk menangani filter kategori dari URL
 function checkUrlFilter() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('cat');
     
     if (category) {
-        // Jika ada parameter cat, filter artikel
+        // Decode kembali agar cocok dengan data di JSON
+        const decodedCategory = decodeURIComponent(category);
+        
         const filteredArticles = allArticles.filter(article => 
-            article.category.toLowerCase() === category.toLowerCase()
+            article.category === decodedCategory
         );
         
-        // Render hasil filter ke grid utama
         const newsList = document.getElementById('article-grid');
-        newsList.innerHTML = ''; // Kosongkan dulu
+        newsList.innerHTML = ''; 
         
+        // Sembunyikan Hero & Sidebar saat filter aktif
+        const hero = document.getElementById('hero-section');
+        const sidebar = document.querySelector('.sidebar-column');
+        if(hero) hero.style.display = 'none';
+        if(sidebar) sidebar.style.display = 'none';
+
+        // Ubah Judul Section
+        const titleEl = document.querySelector('.section-title h2');
+        if(titleEl) titleEl.innerText = `Kategori: ${decodedCategory}`;
+
         if (filteredArticles.length > 0) {
             filteredArticles.forEach(article => {
-                // Gunakan logika render item yang sama seperti loadMoreArticles
                 const item = document.createElement('div');
                 item.className = 'news-item';
                 item.onclick = () => window.location.href = `article.html?slug=${article.slug}`;
@@ -39,28 +59,16 @@ function checkUrlFilter() {
                     <div class="news-info">
                         <span class="news-cat">${article.category}</span>
                         <h3>${article.title}</h3>
-                        <div class="news-meta">
-                            <span>${new Date(article.date).toLocaleDateString('id-ID')}</span>
-                        </div>
                     </div>
                 `;
                 newsList.appendChild(item);
             });
-            
-            // Sembunyikan Hero Section jika sedang filter kategori (opsional, biar fokus)
-            document.getElementById('hero-section').style.display = 'none';
-            document.querySelector('.sidebar-column').style.display = 'none'; // Sembunyikan sidebar juga
-            
-            // Ubah judul halaman
-            document.querySelector('.section-title h2').innerText = `Kategori: ${category}`;
-            
-            // Sembunyikan tombol load more karena ini hasil filter
-            const btn = document.getElementById('load-more-btn');
-            if(btn) btn.style.display = 'none';
-
         } else {
-            newsList.innerHTML = '<p>Tidak ada artikel di kategori ini.</p>';
+            newsList.innerHTML = '<p style="padding:20px;">Belum ada artikel di kategori ini.</p>';
         }
+        
+        const btn = document.getElementById('load-more-btn');
+        if(btn) btn.style.display = 'none';
     }
 }
 
