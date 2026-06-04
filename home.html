@@ -14,8 +14,7 @@
     <nav class="navbar">
         <div class="container nav-container">
             <div class="logo">
-                <img src="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" alt="Logo" />
-                <span style="margin-top: 5px;">getren</span>
+                <a href="home.html" onclick="filterCategory('all')">Ngetren</a>
             </div>
             <div class="search-box desktop-search">
                 <input type="text" id="search-input" placeholder="Cari berita..." />
@@ -92,10 +91,21 @@
                     <!-- Sidebar items -->
                 </div>
 
+                <div class="read-also-section" style="margin-top: 40px;">
+                    <div class="section-title">
+                        <h2>Baca Juga</h2>
+                        <div class="title-line"></div>
+                    </div>
+                    <div id="read-also-list" class="sidebar-list">
+                        <!-- Diisi oleh JS -->
+                    </div>
+                </div>
+
                 <div class="ad-placeholder">
-                    <p>Space Iklan Affiliate</p>
+                    <p>Advertisement</p>
                 </div>
             </aside>
+
         </div>
     </main>
 
