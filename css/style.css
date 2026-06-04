@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
 /* =========================================
    BASE & RESET
@@ -51,16 +52,13 @@ img {
     display: flex;
     align-items: center;
     font-weight: 700;
-    font-size: 1.4rem;
+    font-size: 2.1rem;
     font-family: 'Bebas Neue', sans-serif;
     color: #2196F3;
     z-index: 1001;
-}
-
-.logo img {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    text-shadow: 
+    -2px -2px 5px rgba(255, 255, 255, 1),  /* Cahaya (Sorotan) */
+     2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .nav-links {
@@ -87,7 +85,8 @@ img {
 
 .dropbtn {
     cursor: pointer;
-    padding: 10px 15px; /* Sesuaikan dengan padding link lain */
+    padding: 10px 15px;
+    /* Sesuaikan dengan padding link lain */
 }
 
 .dropdown-content {
@@ -95,7 +94,7 @@ img {
     position: absolute;
     background-color: #ffffff;
     min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
     z-index: 1001;
     border-radius: 8px;
     top: 100%;
@@ -119,8 +118,10 @@ img {
 
 .dropdown-content a:hover {
     background-color: #f8f9fa;
-    color: #2196F3; /* Warna biru getren */
-    padding-left: 20px; /* Efek geser sedikit */
+    color: #2196F3;
+    /* Warna biru getren */
+    padding-left: 20px;
+    /* Efek geser sedikit */
 }
 
 /* Tampilkan dropdown saat hover */
@@ -130,26 +131,36 @@ img {
 
 /* Animasi muncul */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive Mobile Logic */
 @media (max-width: 768px) {
     .dropdown-content {
-        position: static; /* Agar menyatu dengan aliran menu */
+        position: static;
+        /* Agar menyatu dengan aliran menu */
         box-shadow: none;
         background: #f9f9f9;
         width: 100%;
-        display: none; /* SEMBUNYIKAN SECARA DEFAULT DI MOBILE */
-        padding-left: 20px; /* Indentasi */
+        display: none;
+        /* SEMBUNYIKAN SECARA DEFAULT DI MOBILE */
+        padding-left: 20px;
+        /* Indentasi */
     }
-    
+
     /* Class khusus untuk menampilkan dropdown saat diklik */
     .dropdown-content.show {
         display: block;
     }
-    
+
     .dropdown-content a {
         padding: 12px 16px;
         border-bottom: 1px solid #eee;
@@ -262,6 +273,7 @@ img {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 20px;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
 }
@@ -350,7 +362,8 @@ img {
     align-items: center;
     justify-content: center;
     color: #777;
-    font-weight: bold;
+    opacity: 0.8;
+    font-size: 0.8rem;
     border-radius: 6px;
     margin-top: 30px;
 }
@@ -366,7 +379,8 @@ img {
 
 .btn-load-more {
     background-color: #ffffff;
-    color: #2196F3; /* Biru ala Bola.com */
+    color: #2196F3;
+    /* Biru ala Bola.com */
     border: 2px solid #2196F3;
     padding: 12px 30px;
     font-size: 1rem;
@@ -398,7 +412,8 @@ img {
 /* Container Utama Artikel */
 .article-detail {
     background: #ffffff;
-    max-width: 780px; /* Lebar ideal untuk membaca ala Detik/Bola */
+    max-width: 780px;
+    /* Lebar ideal untuk membaca ala Detik/Bola */
     margin: 30px auto;
     padding: 0 20px 40px;
     position: relative;
@@ -410,15 +425,16 @@ img {
     text-align: left;
 }
 
-/* Label Kategori (Merah ala Bola.com) */
+/* Label Kategori (Biru ala Bola.com) */
 .article-category {
     display: inline-block;
-    color: #2196F3; 
+    color: #2196F3;
     border: 1px solid #2196F3;
     padding: 4px 10px;
     border-radius: 20px;
     font-weight: 800;
-    font-size: 0.9rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.8rem;
     text-transform: uppercase;
     margin-bottom: 10px;
     margin-top: 20px;
@@ -426,7 +442,7 @@ img {
 
 /* Judul Artikel Besar */
 .article-title {
-    font-size: 2rem; /* Sekitar 32px */
+    font-size: 2rem;
     line-height: 1.3;
     color: #222;
     font-weight: 700;
@@ -462,9 +478,12 @@ img {
 
 /* Isi Konten Artikel (Typography) */
 .article-content {
-    font-family: 'Georgia', 'Times New Roman', serif; /* Font Serif lebih enak dibaca untuk artikel panjang */
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.8; /* Spasi antar baris lega */
+    font-family: 'Georgia', 'Times New Roman', serif;
+    /* Font Serif lebih enak dibaca untuk artikel panjang */
+    font-size: 1.125rem;
+    /* 18px */
+    line-height: 1.8;
+    /* Spasi antar baris lega */
     color: #333;
 }
 
@@ -474,7 +493,8 @@ img {
 }
 
 .article-content h2 {
-    font-family: 'Segoe UI', sans-serif; /* Heading tetap Sans-Serif */
+    font-family: 'Segoe UI', sans-serif;
+    /* Heading tetap Sans-Serif */
     font-size: 1.5rem;
     font-weight: 700;
     color: #111;
@@ -492,7 +512,8 @@ img {
     margin-bottom: 15px;
 }
 
-.article-content ul, .article-content ol {
+.article-content ul,
+.article-content ol {
     margin-left: 20px;
     margin-bottom: 25px;
 }
@@ -515,8 +536,7 @@ img {
     color: #555;
 }
 
-/* Tombol Kembali (Minimalis) */
-.back-to-home {
+/* .back-to-home {
     display: inline-flex;
     align-items: center;
     margin-top: 50px;
@@ -536,6 +556,75 @@ img {
 .back-to-home img {
     width: 16px;
     margin-right: 8px;
+} */
+
+.share-container {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.share-container h3 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 14px;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+    font-size: 0.9rem;
+}
+
+.share-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.share-btn img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1); /* Membuat icon jadi putih */
+}
+
+/* Warna Tombol Spesifik */
+.share-btn.wa { background-color: #25D366; }
+.share-btn.fb { background-color: #1877F2; }
+.share-btn.x { background-color: #000000; }
+.share-btn.copy { background-color: #6c757d; }
+
+/* Responsive Mobile */
+/* Responsive Mobile untuk Share Button */
+@media (max-width: 768px) {
+    .share-buttons {
+        flex-direction: row; /* Tetap ke samping (horizontal) */
+        justify-content: space-between; /* Memberi jarak rata antar tombol */
+        gap: 8px; /* Jarak antar tombol diperkecil sedikit agar muat */
+    }
+    
+    .share-btn {
+        width: auto; /* Lebar menyesuaikan konten, tidak full width */
+        padding: 12px 12px; /* Padding diperkecil sedikit */
+        font-size: 0.8rem; /* Font sedikit lebih kecil agar muat */
+        flex: 1; /* Agar semua tombol memiliki lebar yang sama rata */
+        justify-content: center; /* Teks dan icon di tengah tombol */
+    }
 }
 
 /* =========================================
@@ -548,14 +637,16 @@ img {
     }
 
     .article-title {
-        font-size: 1.5rem; /* Lebih kecil di HP */
+        font-size: 1.5rem;
+        /* Lebih kecil di HP */
     }
 
     .article-content {
-        font-size: 1rem; /* 16px di HP */
+        font-size: 1rem;
+        /* 16px di HP */
         line-height: 1.6;
     }
-    
+
     .article-content h2 {
         font-size: 1.3rem;
     }
@@ -647,5 +738,63 @@ img {
     .news-thumb {
         width: 100%;
         height: 180px;
+    }
+}
+
+/* =========================================
+   BACA JUGA - MOBILE COMPACT WITH THUMBNAIL
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* Container Item Baca Juga */
+    #read-also-list .news-item {
+        display: flex;
+        flex-direction: row; /* Kembalikan ke horizontal */
+        align-items: center; /* Posisi vertikal di tengah */
+        gap: 12px; /* Jarak antara gambar dan teks */
+        padding: 10px 0;
+        background: transparent;
+        box-shadow: none;
+        border-bottom: 1px solid #f0f0f0; /* Garis pemisah tipis */
+        margin-bottom: 0;
+    }
+
+    /* Gambar Thumbnail Kecil */
+    #read-also-list .news-thumb {
+        display: block; /* Munculkan kembali */
+        width: 80px;   /* Lebar tetap kecil */
+        height: 60px;  /* Tinggi tetap kecil */
+        object-fit: cover;
+        border-radius: 6px; /* Sedikit melengkung */
+        flex-shrink: 0; /* Agar gambar tidak gepeng */
+    }
+
+    /* Info Teks */
+    #read-also-list .news-info {
+        flex: 1; /* Mengisi sisa ruang */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Judul Artikel */
+    #read-also-list .news-info h3 {
+        font-size: 0.9rem; /* Ukuran font kecil & rapi */
+        line-height: 1.4;
+        color: #333;
+        font-weight: 600;
+        margin: 0;
+        
+        /* Membatasi judul maksimal 2 baris agar rapi */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Sembunyikan kategori/meta agar lebih bersih */
+    #read-also-list .news-cat, 
+    #read-also-list .news-meta {
+        display: none;
     }
 }
