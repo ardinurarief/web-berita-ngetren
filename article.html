@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <!-- Ganti src dengan logo asli Anda nanti -->
+                <img src="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" alt="Logo" />
+                <span style="margin-top: 5px;">getren</span>
+            </div>
+
+            <!-- Search Bar (Akan disembunyikan/ditampilkan via CSS) -->
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Cari berita...">
+                <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon">
+            </div>
+
+            <!-- Tombol Hamburger (Icon Gambar) -->
+            <div class="hamburger" id="hamburger-btn">
+                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
+            </div>
+
+            <!-- Menu Links -->
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="home.html" class="active" onclick="filterCategory('all')">Beranda</a></li>
+                <li><a href="home.html?cat=Bola" onclick="filterCategory('Bola')">Bola</a></li>
+                <li><a href="home.html?cat=Teknologi" onclick="filterCategory('Teknologi')">Tekno</a></li>
+                <li><a href="home.html?cat=Lifestyle" onclick="filterCategory('Lifestyle')">Lifestyle</a></li>
+                <li><a href="home.html?cat=Keuangan" onclick="filterCategory('Keuangan')">Bisnis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Search (Hanya muncul di HP) -->
+    <div class="mobile-search-container" style="display: none;">
+        <div class="search-box" style="width: 100%; display: flex;">
+            <input type="text" id="search-input-mobile" placeholder="Cari judul atau kategori...">
+            <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon">
+        </div>
+    </div>
+
+    <main class="container">
+        <div id="article-container" class="article-detail">
+            <div class="loading">Memuat konten...</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <p>&copy; 2026 Ngetren All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/174/174855.png" alt="Instagram" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5969/5969020.png" alt="Twitter" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook" /></a>
+            </div>
+        </div>
+    </footer>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+            const isVisited = urlParams.get('visited') === 'true';
+
+            if (!slug) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            fetch('data/articles.json')
+                .then(response => response.json())
+                .then(articles => {
+                    const article = articles.find(a => a.slug === slug);
+
+                    if (article) {
+                        document.title = article.title;
+                        const container = document.getElementById('article-container');
+                        
+                        // Render Konten Artikel + Tombol Back
+                        container.innerHTML = `
+                            <header class="article-header">
+                                <span class="article-category">${article.category}</span>
+                                <h1 class="article-title">${article.title}</h1>
+                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')}</div>
+                            </header>
+                            
+                            <img src="${article.image}" alt="${article.title}" class="article-image">
+                            
+                            <div class="article-content">
+                                ${article.content}
+                            </div>
+                        `;
+
+                        // LOGIKA REDIRECT (1 Detik)
+                        if (!isVisited) {
+                            setTimeout(() => {
+                                const newUrl = `${window.location.pathname}?slug=${slug}&visited=true`;
+                                window.history.replaceState({path: newUrl}, '', newUrl);
+                                window.location.href = article.affiliate_link;
+                            }, 1500);
+                        }
+                        
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                })
+                .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>

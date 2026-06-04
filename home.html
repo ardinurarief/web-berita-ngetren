@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ngetren - Portal Berita & Produk Terkini</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- Navigation (Sama seperti sebelumnya) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" alt="Logo" />
+                <span style="margin-top: 5px;">getren</span>
+            </div>
+            <div class="search-box desktop-search">
+                <input type="text" id="search-input" placeholder="Cari berita..." />
+                <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon" />
+            </div>
+            <div class="hamburger" id="hamburger-btn">
+                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="home.html" class="active" onclick="filterCategory('all')">Beranda</a></li>
+                <li><a href="home.html?cat=Bola" onclick="filterCategory('Bola')">Bola</a></li>
+                <li><a href="home.html?cat=Teknologi" onclick="filterCategory('Teknologi')">Tekno</a></li>
+                <li><a href="home.html?cat=Lifestyle" onclick="filterCategory('Lifestyle')">Lifestyle</a></li>
+                <li><a href="home.html?cat=Keuangan" onclick="filterCategory('Keuangan')">Bisnis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Search -->
+    <div class="mobile-search-container">
+        <div class="search-box">
+            <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon"
+                style="margin-right: 10px;" />
+            <input type="text" id="search-input-mobile" placeholder="Cari judul atau kategori" />
+        </div>
+    </div>
+
+    <main class="container main-content">
+        <!-- HERO SECTION (Headline Utama) -->
+        <section id="hero-section" class="hero-section">
+            <!-- Akan diisi oleh JS -->
+            <div class="loading-hero">Memuat Headline...</div>
+        </section>
+
+        <!-- CONTENT WRAPPER (Grid 2 Kolom: Main & Sidebar) -->
+        <div class="content-wrapper">
+            <!-- KOLOM KIRI: Berita Terbaru -->
+            <div class="main-column">
+                <div class="section-title">
+                    <h2>Berita Terbaru</h2>
+                    <div class="title-line"></div>
+                </div>
+                <div id="article-grid" class="news-list">
+                    <!-- List artikel akan muncul di sini -->
+                </div>
+                <div class="load-more-container">
+                    <button id="load-more-btn" class="btn-load-more">Muat Lebih Banyak</button>
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN: Sidebar (Populer/Kategori) -->
+            <aside class="sidebar-column">
+                <div class="section-title">
+                    <h2>Terpopuler</h2>
+                    <div class="title-line"></div>
+                </div>
+                <div id="sidebar-list" class="sidebar-list">
+                    <!-- Sidebar items -->
+                </div>
+
+                <div class="ad-placeholder">
+                    <p>Space Iklan Affiliate</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <p>&copy; 2026 Ngetren All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/174/174855.png" alt="Instagram" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5969/5969020.png" alt="Twitter" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook" /></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/logic.js"></script>
+</body>
+
+</html>
