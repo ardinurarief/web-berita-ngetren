@@ -1,6 +1,6 @@
 let allArticles = [];
 let displayedCount = 0; 
-const ITEMS_PER_PAGE = 6; 
+const ITEMS_PER_PAGE = 10; 
 
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
