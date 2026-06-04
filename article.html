@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,13 @@
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" />
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="container nav-container">
             <div class="logo">
                 <!-- Ganti src dengan logo asli Anda nanti -->
-                <img src="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" alt="Logo" />
-                <span style="margin-top: 5px;">getren</span>
-            </div>
-
-            <!-- Search Bar (Akan disembunyikan/ditampilkan via CSS) -->
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Cari berita...">
-                <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon">
+                <a href="home.html" onclick="filterCategory('all')">Ngetren</a>
             </div>
 
             <!-- Tombol Hamburger (Icon Gambar) -->
@@ -37,14 +32,6 @@
             </ul>
         </div>
     </nav>
-
-    <!-- Mobile Search (Hanya muncul di HP) -->
-    <div class="mobile-search-container" style="display: none;">
-        <div class="search-box" style="width: 100%; display: flex;">
-            <input type="text" id="search-input-mobile" placeholder="Cari judul atau kategori...">
-            <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon">
-        </div>
-    </div>
 
     <main class="container">
         <div id="article-container" class="article-detail">
@@ -66,7 +53,14 @@
         </div>
     </footer>
 
-        <script>
+    <script>
+        // FIX BUG BACK BUTTON: Paksa reload jika halaman diambil dari cache
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug');
@@ -85,13 +79,13 @@
                     if (article) {
                         document.title = article.title;
                         const container = document.getElementById('article-container');
-                        
-                        // Render Konten Artikel + Tombol Back
+
+                        // Render Konten + Share Button + Back Button
                         container.innerHTML = `
                             <header class="article-header">
-                                <span class="article-category">${article.category}</span>
+                                <span class="article-category" style="opacity: 0; margin: 0;">${article.category}</span>
                                 <h1 class="article-title">${article.title}</h1>
-                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')}</div>
+                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')} <span class="article-category" style="margin-left: 10px;">${article.category}</span></div>
                             </header>
                             
                             <img src="${article.image}" alt="${article.title}" class="article-image">
@@ -99,23 +93,73 @@
                             <div class="article-content">
                                 ${article.content}
                             </div>
+
+                            <!-- SHARE BUTTONS -->
+                            <div class="share-container">
+                                <h3>Bagikan Berita Ini:</h3>
+                                <div class="share-buttons">
+                                    <button class="share-btn wa" onclick="shareToWA()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/4423/4423697.png" alt="WA">
+                                    </button>
+                                    <button class="share-btn fb" onclick="shareToFB()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3128/3128304.png" alt="FB">
+                                    <button class="share-btn x" onclick="shareToX()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/5968/5968958.png" alt="X">
+                                    </button>
+                                    <button class="share-btn copy" onclick="copyLink()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/18789/18789564.png" alt="Copy">
+                                    </button>
+                                </div>
+                            </div>
                         `;
 
-                        // LOGIKA REDIRECT (1 Detik)
+                        // LOGIKA REDIRECT
                         if (!isVisited) {
                             setTimeout(() => {
                                 const newUrl = `${window.location.pathname}?slug=${slug}&visited=true`;
-                                window.history.replaceState({path: newUrl}, '', newUrl);
+                                window.history.replaceState({ path: newUrl }, '', newUrl);
                                 window.location.href = article.affiliate_link;
-                            }, 1500);
+                            }, 1000);
                         }
-                        
+
                     } else {
                         window.location.href = 'index.html';
                     }
                 })
                 .catch(err => console.error(err));
         });
+
+        // FUNGSI SHARE (Diletakkan di global scope agar bisa dipanggil onclick)
+        function getShareUrl() {
+            return window.location.origin + window.location.pathname + '?slug=' + new URLSearchParams(window.location.search).get('slug');
+        }
+
+        function shareToWA() {
+            const url = encodeURIComponent(getShareUrl());
+            const text = encodeURIComponent(document.title);
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        }
+
+        function shareToFB() {
+            const url = encodeURIComponent(getShareUrl());
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareToX() {
+            const url = encodeURIComponent(getShareUrl());
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            const url = getShareUrl();
+            navigator.clipboard.writeText(url).then(() => {
+                alert("✅ Link berhasil disalin!");
+            }).catch(err => {
+                console.error('Gagal menyalin: ', err);
+            });
+        }
     </script>
 </body>
+
 </html>
