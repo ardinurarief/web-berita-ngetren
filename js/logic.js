@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function filterCategory(category) {
     if (category === 'all') {
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
     } else {
         // Encode URI agar spasi dan simbol '&' aman di URL
         const encodedCat = encodeURIComponent(category);
