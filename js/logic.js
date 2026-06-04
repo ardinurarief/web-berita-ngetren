@@ -1,14 +1,14 @@
 let allArticles = [];
-let displayedCount = 0; 
-const ITEMS_PER_PAGE = 10; 
+let displayedCount = 0;
+const ITEMS_PER_PAGE = 20;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
     setupSearch();
     setupHamburger();
-    
+
     const loadMoreBtn = document.getElementById('load-more-btn');
-    if(loadMoreBtn) {
+    if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', loadMoreArticles);
     }
 });
@@ -27,27 +27,27 @@ function filterCategory(category) {
 function checkUrlFilter() {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('cat');
-    
+
     if (category) {
         // Decode kembali agar cocok dengan data di JSON
         const decodedCategory = decodeURIComponent(category);
-        
-        const filteredArticles = allArticles.filter(article => 
+
+        const filteredArticles = allArticles.filter(article =>
             article.category === decodedCategory
         );
-        
+
         const newsList = document.getElementById('article-grid');
-        newsList.innerHTML = ''; 
-        
+        newsList.innerHTML = '';
+
         // Sembunyikan Hero & Sidebar saat filter aktif
         const hero = document.getElementById('hero-section');
         const sidebar = document.querySelector('.sidebar-column');
-        if(hero) hero.style.display = 'none';
-        if(sidebar) sidebar.style.display = 'none';
+        if (hero) hero.style.display = 'none';
+        if (sidebar) sidebar.style.display = 'none';
 
         // Ubah Judul Section
         const titleEl = document.querySelector('.section-title h2');
-        if(titleEl) titleEl.innerText = `Kategori: ${decodedCategory}`;
+        if (titleEl) titleEl.innerText = `Kategori: ${decodedCategory}`;
 
         if (filteredArticles.length > 0) {
             filteredArticles.forEach(article => {
@@ -66,9 +66,9 @@ function checkUrlFilter() {
         } else {
             newsList.innerHTML = '<p style="padding:20px;">Belum ada artikel di kategori ini.</p>';
         }
-        
+
         const btn = document.getElementById('load-more-btn');
-        if(btn) btn.style.display = 'none';
+        if (btn) btn.style.display = 'none';
     }
 }
 
@@ -77,26 +77,18 @@ async function loadArticles() {
     try {
         const response = await fetch('data/articles.json');
         if (!response.ok) throw new Error('Gagal memuat data');
+        allArticles = await response.json();
         
-        let rawArticles = await response.json();
-        
-        // PENTING: Balik urutan agar artikel TERBARU ada di index 0
-        allArticles = rawArticles.reverse(); 
-
         displayedCount = 0;
-        
-        // 1. Render Hero (Ambil artikel PERTAMA dari daftar yang sudah dibalik = Artikel Terbaru)
         renderHero(allArticles[0]);
-        
-        // 2. Render Sidebar (Ambil 5 artikel setelah headline)
         updateSidebar(1, 5); 
         
-        // 3. Render Batch Pertama News List
-        loadMoreArticles(); 
-        
-        // Cek filter kategori jika ada
-        checkUrlFilter(); 
+        // Panggil Baca Juga pertama kali (ambil artikel index 6-9 misalnya)
+        updateReadAlso(6, 4); 
 
+        loadMoreArticles(); 
+        checkUrlFilter(); 
+        
     } catch (error) {
         console.error('Error:', error);
     }
@@ -104,8 +96,8 @@ async function loadArticles() {
 
 function renderHero(headline) {
     const heroSection = document.getElementById('hero-section');
-    if(!headline || !heroSection) return;
-    
+    if (!headline || !heroSection) return;
+
     // Cek apakah gambar ada, jika tidak pakai placeholder
     const imgUrl = headline.image && headline.image.length > 10 ? headline.image : 'https://via.placeholder.com/800x400?text=No+Image';
 
@@ -123,7 +115,7 @@ function renderHero(headline) {
 // Fungsi Update Sidebar Dinamis
 function updateSidebar(startIndex, count) {
     const sidebarList = document.getElementById('sidebar-list');
-    if(!sidebarList) return;
+    if (!sidebarList) return;
 
     // Ambil artikel untuk sidebar
     const sidebarArticles = allArticles.slice(startIndex, startIndex + count);
@@ -178,9 +170,9 @@ function loadMoreArticles() {
     // Update counter
     displayedCount += nextBatch.length;
 
-    // UPDATE SIDEBAR JUGA SETIAP KALI LOAD MORE!
-    // Kita ambil 5 artikel berikutnya setelah batch yang baru saja ditampilkan
-    updateSidebar(1 + displayedCount, 5);
+    // UPDATE SIDEBAR (Terpopuler & Baca Juga)
+    updateSidebar(1, 5); // Terpopuler tetap ambil dari atas
+    updateReadAlso(1 + displayedCount, 4); // Baca Juga ambil dari artikel SELANJUTNYA yang belum tampil
 
     // Cek apakah masih ada sisa artikel
     if (1 + displayedCount >= allArticles.length) {
@@ -188,35 +180,59 @@ function loadMoreArticles() {
     }
 }
 
+function updateReadAlso(startIndex, count) {
+    const readAlsoList = document.getElementById('read-also-list');
+    if(!readAlsoList) return;
+
+    // Ambil artikel mulai dari posisi terakhir yang ditampilkan di kolom kiri
+    // Ini memastikan "Baca Juga" selalu berisi artikel yang "belum terbaca"
+    const alsoArticles = allArticles.slice(startIndex, startIndex + count);
+
+    if (alsoArticles.length > 0) {
+        readAlsoList.innerHTML = alsoArticles.map(article => `
+            <div class="news-item" onclick="window.location.href='article.html?slug=${article.slug}'">
+                <img src="${article.image}" alt="${article.title}" class="news-thumb">
+                <div class="news-info">
+                    <h3>${article.title}</h3>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        // Jika artikel sudah habis, sembunyikan section Baca Juga atau tampilkan pesan
+        readAlsoList.innerHTML = '<p style="font-size:0.8rem; color:#888;">Sudah tidak ada artikel lain.</p>';
+    }
+}
+
+
 // ... (Fungsi setupSearch dan setupHamburger tetap sama seperti sebelumnya) ...
 function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
-    
+
     const handleSearch = (e) => {
         const keyword = e.target.value.toLowerCase().trim();
         const newsList = document.getElementById('article-grid');
-        
-        if (keyword === '') { 
+
+        if (keyword === '') {
             newsList.innerHTML = '';
             displayedCount = 0;
             loadMoreArticles();
             // Reset sidebar ke default saat search dihapus
             updateSidebar(1, 5);
-            return; 
+            return;
         }
 
         const filtered = allArticles.filter(a => a.title.toLowerCase().includes(keyword) || a.category.toLowerCase().includes(keyword));
-        
+
         newsList.innerHTML = filtered.map(article => `
              <div class="news-item" onclick="window.location.href='article.html?slug=${article.slug}'">
                 <img src="${article.image}" class="news-thumb">
                 <div class="news-info"><h3>${article.title}</h3></div>
             </div>
         `).join('');
-        
+
         const btn = document.getElementById('load-more-btn');
-        if(btn) btn.style.display = 'none';
+        if (btn) btn.style.display = 'none';
     };
 
     if (searchInput) searchInput.addEventListener('input', handleSearch);
@@ -226,5 +242,5 @@ function setupSearch() {
 function setupHamburger() {
     const btn = document.getElementById('hamburger-btn');
     const menu = document.getElementById('nav-menu');
-    if(btn && menu) btn.addEventListener('click', () => menu.classList.toggle('active'));
+    if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('active'));
 }
