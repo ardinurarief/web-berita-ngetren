@@ -198,6 +198,20 @@ img {
     opacity: 0.6;
 }
 
+.no-result-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    opacity: 0.6;
+    grid-column: 1 / -1; /* Memastikan mengambil lebar penuh jika pakai grid */
+}
+
+.no-result-message h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
 /* =========================================
    HERO SECTION (Headline Besar)
    ========================================= */
@@ -683,20 +697,77 @@ img {
 /* =========================================
    MOBILE RESPONSIVE
    ========================================= */
-.mobile-search-container {
+/* =========================================
+   NAVBAR ACTIONS & MOBILE SEARCH
+   ========================================= */
+
+/* Wrapper untuk tombol di kanan navbar */
+.nav-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Tombol Search Icon Mobile (Default Hidden di Desktop) */
+.mobile-search-trigger {
     display: none;
-    padding: 10px 15px;
-    background: #fff;
+    cursor: pointer;
+}
+
+.mobile-search-trigger img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.8;
+}
+
+/* Kolom Pencarian Mobile (Hidden by default) */
+.mobile-search-bar {
+    display: none; /* Tersembunyi */
+    background-color: #ffffff;
     border-bottom: 1px solid #eee;
+    padding: 10px 10px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.mobile-search-bar.active {
+    display: block; /* Muncul saat aktif */
+    animation: slideDown 0.3s ease;
+}
+
+.mobile-search-bar .container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-search-bar input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Mobile Logic */
+@media (max-width: 768px) {
+    .desktop-search { display: none; } /* Sembunyikan search desktop */
+    .mobile-search-trigger { display: block; } /* Munculkan icon search */
+    
+    /* Jika search bar aktif, navbar mungkin perlu penyesuaian z-index */
+    .mobile-search-bar.active {
+        position: relative;
+        z-index: 999;
+    }
 }
 
 @media (max-width: 768px) {
     .desktop-search {
         display: none;
-    }
-
-    .mobile-search-container {
-        display: block;
     }
 
     .nav-links {
