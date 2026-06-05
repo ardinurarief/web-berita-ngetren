@@ -1,6 +1,6 @@
 let allArticles = [];
 let displayedCount = 0;
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 6; // Saya ubah ke 6 agar lebih standar portal berita (bisa diganti 20 jika mau)
 
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
@@ -15,11 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function filterCategory(category) {
     if (category === 'all') {
-        window.location.href = 'home.html';
+        window.location.href = 'index.html'; // Pastikan kembali ke index.html
     } else {
-        // Encode URI agar spasi dan simbol '&' aman di URL
         const encodedCat = encodeURIComponent(category);
-        window.location.href = `home.html?cat=${encodedCat}`;
+        window.location.href = `index.html?cat=${encodedCat}`;
     }
 }
 
@@ -29,9 +28,7 @@ function checkUrlFilter() {
     const category = urlParams.get('cat');
 
     if (category) {
-        // Decode kembali agar cocok dengan data di JSON
         const decodedCategory = decodeURIComponent(category);
-
         const filteredArticles = allArticles.filter(article =>
             article.category === decodedCategory
         );
@@ -45,7 +42,6 @@ function checkUrlFilter() {
         if (hero) hero.style.display = 'none';
         if (sidebar) sidebar.style.display = 'none';
 
-        // Ubah Judul Section
         const titleEl = document.querySelector('.section-title h2');
         if (titleEl) titleEl.innerText = `Kategori: ${decodedCategory}`;
 
@@ -72,21 +68,31 @@ function checkUrlFilter() {
     }
 }
 
-// Panggil fungsi ini setelah loadArticles selesai
 async function loadArticles() {
     try {
         const response = await fetch('data/articles.json');
         if (!response.ok) throw new Error('Gagal memuat data');
-        allArticles = await response.json();
         
+        let rawArticles = await response.json();
+        
+        // PENTING: BALIK URUTAN AGAR ARTIKEL TERBARU (PALING BAWAH DI JSON) JADI PALING ATAS
+        allArticles = rawArticles.reverse(); 
+
         displayedCount = 0;
+        
+        // 1. Render Hero (Artikel Index 0 = Terbaru)
         renderHero(allArticles[0]);
+        
+        // 2. Render Sidebar Terpopuler (Ambil index 1-5)
         updateSidebar(1, 5); 
         
-        // Panggil Baca Juga pertama kali (ambil artikel index 6-9 misalnya)
+        // 3. Render Baca Juga (Ambil index 6-9 sebagai awalan)
         updateReadAlso(6, 4); 
 
+        // 4. Render Berita Utama Batch Pertama (Mulai index 1)
         loadMoreArticles(); 
+        
+        // 5. Cek Filter Kategori
         checkUrlFilter(); 
         
     } catch (error) {
@@ -98,7 +104,6 @@ function renderHero(headline) {
     const heroSection = document.getElementById('hero-section');
     if (!headline || !heroSection) return;
 
-    // Cek apakah gambar ada, jika tidak pakai placeholder
     const imgUrl = headline.image && headline.image.length > 10 ? headline.image : 'https://via.placeholder.com/800x400?text=No+Image';
 
     heroSection.innerHTML = `
@@ -112,12 +117,10 @@ function renderHero(headline) {
     `;
 }
 
-// Fungsi Update Sidebar Dinamis
 function updateSidebar(startIndex, count) {
     const sidebarList = document.getElementById('sidebar-list');
     if (!sidebarList) return;
 
-    // Ambil artikel untuk sidebar
     const sidebarArticles = allArticles.slice(startIndex, startIndex + count);
 
     if (sidebarArticles.length > 0) {
@@ -138,7 +141,7 @@ function loadMoreArticles() {
     
     if (!newsList) return;
 
-    // Hitung index awal (skip 1 untuk headline)
+    // Hitung index awal (skip 1 karena index 0 sudah jadi Headline)
     const startIdx = 1 + displayedCount; 
     const endIdx = startIdx + ITEMS_PER_PAGE;
     const nextBatch = allArticles.slice(startIdx, endIdx);
@@ -167,12 +170,17 @@ function loadMoreArticles() {
         newsList.appendChild(item);
     });
 
-    // Update counter
+    // Update counter jumlah artikel yang sudah tampil di kolom kiri
     displayedCount += nextBatch.length;
 
-    // UPDATE SIDEBAR (Terpopuler & Baca Juga)
-    updateSidebar(1, 5); // Terpopuler tetap ambil dari atas
-    updateReadAlso(1 + displayedCount, 4); // Baca Juga ambil dari artikel SELANJUTNYA yang belum tampil
+    // UPDATE SIDEBAR DINAMIS
+    // Terpopuler tetap ambil dari atas (index 1-5)
+    updateSidebar(1, 5); 
+    
+    // Baca Juga ambil dari artikel SETELAH batch terakhir yang ditampilkan
+    // Rumus: 1 (headline) + displayedCount (yang sudah muncul di kiri)
+    const readAlsoStartIndex = 1 + displayedCount;
+    updateReadAlso(readAlsoStartIndex, 4);
 
     // Cek apakah masih ada sisa artikel
     if (1 + displayedCount >= allArticles.length) {
@@ -184,8 +192,7 @@ function updateReadAlso(startIndex, count) {
     const readAlsoList = document.getElementById('read-also-list');
     if(!readAlsoList) return;
 
-    // Ambil artikel mulai dari posisi terakhir yang ditampilkan di kolom kiri
-    // Ini memastikan "Baca Juga" selalu berisi artikel yang "belum terbaca"
+    // Ambil artikel dari posisi terakhir
     const alsoArticles = allArticles.slice(startIndex, startIndex + count);
 
     if (alsoArticles.length > 0) {
@@ -198,13 +205,10 @@ function updateReadAlso(startIndex, count) {
             </div>
         `).join('');
     } else {
-        // Jika artikel sudah habis, sembunyikan section Baca Juga atau tampilkan pesan
-        readAlsoList.innerHTML = '<p style="font-size:0.8rem; color:#888;">Sudah tidak ada artikel lain.</p>';
+        readAlsoList.innerHTML = '<p style="font-size:0.8rem; color:#888; padding:10px;">Sudah tidak ada artikel lain.</p>';
     }
 }
 
-
-// ... (Fungsi setupSearch dan setupHamburger tetap sama seperti sebelumnya) ...
 function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
@@ -217,8 +221,8 @@ function setupSearch() {
             newsList.innerHTML = '';
             displayedCount = 0;
             loadMoreArticles();
-            // Reset sidebar ke default saat search dihapus
             updateSidebar(1, 5);
+            updateReadAlso(6, 4); // Reset baca juga
             return;
         }
 
@@ -233,6 +237,10 @@ function setupSearch() {
 
         const btn = document.getElementById('load-more-btn');
         if (btn) btn.style.display = 'none';
+        
+        // Sembunyikan sidebar saat search agar fokus
+        const sidebar = document.querySelector('.sidebar-column');
+        if(sidebar) sidebar.style.display = 'none';
     };
 
     if (searchInput) searchInput.addEventListener('input', handleSearch);
@@ -240,7 +248,50 @@ function setupSearch() {
 }
 
 function setupHamburger() {
-    const btn = document.getElementById('hamburger-btn');
-    const menu = document.getElementById('nav-menu');
-    if (btn && menu) btn.addEventListener('click', () => menu.classList.toggle('active'));
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+    const dropBtn = document.getElementById('dropbtn-lainnya'); 
+    const dropContent = document.querySelector('.dropdown-content'); 
+
+    if(hamburgerBtn && navMenu) {
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    if(dropBtn && dropContent) {
+        dropBtn.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault(); 
+                e.stopPropagation(); 
+                const isShowing = dropContent.classList.contains('show');
+                dropContent.classList.remove('show');
+                if (!isShowing) {
+                    dropContent.classList.add('show');
+                    dropBtn.innerHTML = "Lainnya ▴"; 
+                } else {
+                    dropBtn.innerHTML = "Lainnya ▾"; 
+                }
+            }
+        });
+    }
+
+    if(dropContent) {
+        const linksInside = dropContent.querySelectorAll('a');
+        linksInside.forEach(link => {
+            link.addEventListener('click', () => {
+                dropContent.classList.remove('show');
+                if(dropBtn) dropBtn.innerHTML = "Lainnya ▾";
+            });
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (hamburgerBtn && !hamburgerBtn.contains(e.target) && navMenu && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            if(dropContent) dropContent.classList.remove('show');
+            if(dropBtn) dropBtn.innerHTML = "Lainnya ▾";
+        }
+    });
 }
