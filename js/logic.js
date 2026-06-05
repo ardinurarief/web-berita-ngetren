@@ -1,6 +1,6 @@
 let allArticles = [];
 let displayedCount = 0;
-const ITEMS_PER_PAGE = 6; // Saya ubah ke 6 agar lebih standar portal berita (bisa diganti 20 jika mau)
+const ITEMS_PER_PAGE = 20; // Saya ubah ke 6 agar lebih standar portal berita (bisa diganti 20 jika mau)
 
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
