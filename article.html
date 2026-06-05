@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" />
+    <link rel="icon" href="https://ardinurarief.github.io/web-berita-ngetren/news.png" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -47,7 +47,7 @@
             </div>
             <div class="footer-right">
                 <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/174/174855.png" alt="Instagram" /></a>
-                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5969/5969020.png" alt="Twitter" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968958.png" alt="Twitter" /></a>
                 <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook" /></a>
             </div>
         </div>
@@ -130,6 +130,129 @@
         });
 
         // FUNGSI SHARE (Diletakkan di global scope agar bisa dipanggil onclick)
+        function getShareUrl() {
+            return window.location.origin + window.location.pathname + '?slug=' + new URLSearchParams(window.location.search).get('slug');
+        }
+
+        function shareToWA() {
+            const url = encodeURIComponent(getShareUrl());
+            const text = encodeURIComponent(document.title);
+            window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+        }
+
+        function shareToFB() {
+            const url = encodeURIComponent(getShareUrl());
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareToX() {
+            const url = encodeURIComponent(getShareUrl());
+            const text = encodeURIComponent(document.title);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            const url = getShareUrl();
+            navigator.clipboard.writeText(url).then(() => {
+                alert("✅ Link berhasil disalin!");
+            }).catch(err => {
+                console.error('Gagal menyalin: ', err);
+            });
+        }
+
+        function updateMetaTag(property, content) {
+            let element = document.querySelector(`meta[property="${property}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                element.setAttribute('property', property);
+                document.head.appendChild(element);
+            }
+            element.content = content;
+        }
+
+        function updateNameMeta(name, content) {
+            let element = document.querySelector(`meta[name="${name}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                element.setAttribute('name', name);
+                document.head.appendChild(element);
+            }
+            element.content = content;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+
+            // ... (kode fetch articles.json tetap sama) ...
+
+            fetch('data/articles.json')
+                .then(response => response.json())
+                .then(articles => {
+                    const article = articles.find(a => a.slug === slug);
+
+                    if (article) {
+                        // 1. Update Title Browser
+                        document.title = `${article.title} - Getren News`;
+
+                        // 2. UPDATE OPEN GRAPH (Facebook, WA, LinkedIn)
+                        updateMetaTag('og:title', article.title);
+                        updateMetaTag('og:description', article.metadeskripsi || article.title);
+                        updateMetaTag('og:image', article.image);
+                        updateMetaTag('og:url', window.location.href);
+                        updateMetaTag('og:type', 'article');
+
+                        // 3. UPDATE TWITTER CARDS (X / Twitter)
+                        updateNameMeta('twitter:card', 'summary_large_image');
+                        updateNameMeta('twitter:title', article.title);
+                        updateNameMeta('twitter:description', article.metadeskripsi || article.title);
+                        updateNameMeta('twitter:image', article.image);
+
+                        // ... (Kode render container.innerHTML tetap sama) ...
+
+                        // Render Konten + Share Button (seperti sebelumnya)
+                        const container = document.getElementById('article-container');
+                        container.innerHTML = `
+                            <header class="article-header">
+                                <span class="article-category" style="opacity: 0; margin: 0;">${article.category}</span>
+                                <h1 class="article-title">${article.title}</h1>
+                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')} <span class="article-category" style="margin-left: 10px;">${article.category}</span></div>
+                            </header>
+                        <img src="${article.image}" alt="${article.title}" class="article-image">
+                        <div class="article-content">${article.content}</div>
+                        
+                        <!-- Share Buttons -->
+                        <div class="share-container">
+                                <h3>Bagikan Berita Ini:</h3>
+                                <div class="share-buttons">
+                                    <button class="share-btn wa" onclick="shareToWA()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/4423/4423697.png" alt="WA">
+                                    </button>
+                                    <button class="share-btn fb" onclick="shareToFB()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3128/3128304.png" alt="FB">
+                                    </button>
+                                    <button class="share-btn x" onclick="shareToX()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/5968/5968958.png" alt="X">
+                                    </button>
+                                    <button class="share-btn copy" onclick="copyLink()">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/18789/18789564.png" alt="Copy">
+                                    </button>
+                                </div>
+                         </div>
+                    `;
+
+                        // Logika Redirect Affiliate
+                        if (!urlParams.get('visited')) {
+                            setTimeout(() => {
+                                window.history.replaceState({}, '', `${window.location.pathname}?slug=${slug}&visited=true`);
+                                window.location.href = article.affiliate_link;
+                            }, 1000);
+                        }
+                    }
+                });
+        });
+
+         // FUNGSI SHARE (Diletakkan di global scope agar bisa dipanggil onclick)
         function getShareUrl() {
             return window.location.origin + window.location.pathname + '?slug=' + new URLSearchParams(window.location.search).get('slug');
         }
