@@ -4,8 +4,27 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Ngetren adalah portal berita terkini yang menyajikan informasi tajam dan rekomendasi produk terbaik. Baca berita terbaru seputar teknologi, bola, bisnis, dan lifestyle hanya di Ngetren." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ardinurarief.github.io/web-berita-ngetren/home.html">
+    <meta property="og:title" content="Getren - Portal Berita Terkini & Rekomendasi Produk">
+    <meta property="og:description"
+        content="Baca berita terbaru seputar teknologi, bola, bisnis, dan lifestyle. Temukan rekomendasi produk terbaik hanya di Getren.">
+    <meta property="og:image" content="https://ardinurarief.github.io/web-berita-ngetren/news.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ardinurarief.github.io/web-berita-ngetren/home.html">
+    <meta property="twitter:title" content="Getren - Portal Berita Terkini">
+    <meta property="twitter:description"
+        content="Portal berita terkini yang menyajikan informasi tajam dan rekomendasi produk terbaik.">
+    <meta property="twitter:image" content="https://ardinurarief.github.io/web-berita-ngetren/news.png">
+
     <title>Ngetren - Portal Berita & Produk Terkini</title>
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" />
+    <link rel="icon" href="https://ardinurarief.github.io/web-berita-ngetren/news.png" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -13,16 +32,31 @@
     <!-- Navigation (Sama seperti sebelumnya) -->
     <nav class="navbar">
         <div class="container nav-container">
+            <!-- Logo -->
             <div class="logo">
                 <a href="home.html" onclick="filterCategory('all')">Ngetren</a>
             </div>
+
+            <!-- Search Box Desktop (Hanya muncul di Laptop) -->
             <div class="search-box desktop-search">
                 <input type="text" id="search-input" placeholder="Cari berita..." />
                 <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon" />
             </div>
-            <div class="hamburger" id="hamburger-btn">
-                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
+
+            <!-- Bagian Kanan: Tombol Search Mobile & Hamburger -->
+            <div class="nav-right-actions">
+                <!-- Tombol Search Icon (Hanya Mobile) -->
+                <div class="mobile-search-trigger" id="mobile-search-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" />
+                </div>
+
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
+                </div>
             </div>
+
+            <!-- Menu Links -->
             <ul class="nav-links" id="nav-menu">
                 <li><a href="home.html" onclick="filterCategory('all')">Beranda</a></li>
 
@@ -47,16 +81,14 @@
                 </li>
             </ul>
         </div>
-    </nav>
 
-    <!-- Mobile Search -->
-    <div class="mobile-search-container">
-        <div class="search-box">
-            <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon"
-                style="margin-right: 10px;" />
-            <input type="text" id="search-input-mobile" placeholder="Cari judul atau kategori" />
+        <!-- Kolom Pencarian Mobile (Tersembunyi Default, Muncul Saat Ikon Diklik) -->
+        <div class="mobile-search-bar" id="mobile-search-bar">
+            <div class="container">
+                <input type="text" id="search-input-mobile" placeholder="Ketik judul atau kategori...">
+            </div>
         </div>
-    </div>
+    </nav>
 
     <main class="container main-content">
         <!-- HERO SECTION (Headline Utama) -->
@@ -116,13 +148,29 @@
             </div>
             <div class="footer-right">
                 <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/174/174855.png" alt="Instagram" /></a>
-                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5969/5969020.png" alt="Twitter" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968958.png" alt="Twitter" /></a>
                 <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook" /></a>
             </div>
         </div>
     </footer>
 
     <script src="js/logic.js"></script>
+    <script>
+        window.addEventListener('resize', () => {
+            const mobileSearchBar = document.getElementById('mobile-search-bar');
+
+            // Jika lebar layar lebih dari 768px (Desktop/Tablet besar)
+            if (window.innerWidth > 768) {
+                if (mobileSearchBar) {
+                    mobileSearchBar.classList.remove('active');
+                }
+
+                // Opsional: Reset juga menu hamburger jika terbuka
+                const navMenu = document.getElementById('nav-menu');
+                if (navMenu) navMenu.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 
 </html>
