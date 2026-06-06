@@ -550,28 +550,6 @@ img {
     color: #555;
 }
 
-/* .back-to-home {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 50px;
-    padding: 10px 10px;
-    border: 1px solid #eee;
-    border-radius: 20px;
-    color: #666;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s;
-}
-
-.back-to-home:hover {
-    border-color: #2196F3;
-}
-
-.back-to-home img {
-    width: 16px;
-    margin-right: 8px;
-} */
-
 .share-container {
     margin-top: 40px;
     padding-top: 20px;
