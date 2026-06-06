@@ -1,145 +1,100 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- DEFAULT META TAGS (Akan di-update oleh JS) -->
+
+    <!-- DEFAULT META TAGS (Akan diisi oleh Vercel Edge Function nanti) -->
     <title>Getren News</title>
-    <meta name="description" content="Portal berita terkini dan rekomendasi produk terbaik.">
-    
-    <!-- Open Graph Default -->
+    <meta name="description" content="Portal berita terkini.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ardinurarief.github.io/web-berita-ngetren/home.html">
-    <meta property="og:title" content="Getren - Portal Berita Terkini & Rekomendasi Produk">
-    <meta property="og:description"
-        content="Baca berita terbaru seputar teknologi, bola, bisnis, dan lifestyle. Temukan rekomendasi produk terbaik hanya di Getren.">
+    <meta property="og:title" content="Getren News">
+    <meta property="og:description" content="Portal berita terkini.">
     <meta property="og:image" content="https://ardinurarief.github.io/web-berita-ngetren/news.png">
 
-    <link rel="icon" href="" />
-    <link rel="stylesheet" href="css/desain.css">
+    <link rel="icon" href="https://ardinurarief.github.io/web-berita-ngetren/news.png" />
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
 
-    <!-- NAVBAR -->
+<body>
     <nav class="navbar">
         <div class="container nav-container">
-            <div class="logo" onclick="window.location.href='index.html'">
-                <img src="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" alt="Logo" />
-                <span style="margin-top: 5px;">getren</span>
+            <div class="logo">
+                <a href="home.html">Ngetren</a>
             </div>
-            
-            <div class="search-box desktop-search">
-                <input type="text" id="search-input" placeholder="Cari berita...">
-                <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon">
+            <div class="hamburger" id="hamburger-btn">
+                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
             </div>
-
-            <div class="nav-right-actions">
-                <div class="mobile-search-trigger" id="mobile-search-btn">
-                    <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" />
-                </div>
-                <div class="hamburger" id="hamburger-btn">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Menu" />
-                </div>
-            </div>
-
             <ul class="nav-links" id="nav-menu">
-                <li><a href="index.html">Beranda</a></li>
+                <li><a href="home.html" onclick="filterCategory('all')">Beranda</a></li>
+
+                <!-- Kategori Utama -->
                 <li><a href="#" onclick="filterCategory('Politik & Pemerintahan')">Politik</a></li>
                 <li><a href="#" onclick="filterCategory('Ekonomi & Bisnis')">Bisnis</a></li>
                 <li><a href="#" onclick="filterCategory('Sains & Teknologi')">Tekno</a></li>
                 <li><a href="#" onclick="filterCategory('Olahraga (Sports)')">Bola</a></li>
+
+                <!-- Dropdown Menu -->
                 <li class="dropdown">
+                    <!-- Tambahkan ID 'dropbtn-lainnya' di sini -->
                     <a href="#" id="dropbtn-lainnya" class="dropbtn">Lainnya ▾</a>
                     <div class="dropdown-content">
-                        <a href="#" onclick="filterCategory('Hukum & Kriminal')">Hukum</a>
-                        <a href="#" onclick="filterCategory('Sosial & Budaya')">Sosial</a>
-                        <a href="#" onclick="filterCategory('Internasional')">Global</a>
+                        <a href="#" onclick="filterCategory('Hukum & Kriminal')">Hukum & Kriminal</a>
+                        <a href="#" onclick="filterCategory('Sosial & Budaya')">Sosial & Budaya</a>
+                        <a href="#" onclick="filterCategory('Internasional')">Internasional</a>
                         <a href="#" onclick="filterCategory('Gaya Hidup & Hiburan')">Lifestyle</a>
-                        <a href="#" onclick="filterCategory('Pendidikan')">Edukasi</a>
-                        <a href="#" onclick="filterCategory('Kesehatan')">Sehat</a>
+                        <a href="#" onclick="filterCategory('Pendidikan')">Pendidikan</a>
+                        <a href="#" onclick="filterCategory('Kesehatan')">Kesehatan</a>
                     </div>
                 </li>
             </ul>
         </div>
-        
-        <!-- Mobile Search Bar -->
-        <div class="mobile-search-bar" id="mobile-search-bar">
-            <div class="container">
-                <input type="text" id="search-input-mobile" placeholder="Ketik judul atau kategori...">
-                <img src="https://cdn-icons-png.flaticon.com/128/622/622669.png" alt="Search" class="search-icon">
-            </div>
-        </div>
     </nav>
 
-    <!-- KONTEN ARTIKEL -->
-    <main class="container main-content">
+    <main class="container">
         <div id="article-container" class="article-detail">
             <div class="loading">Memuat konten...</div>
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="footer">
-        <div class="container footer-wrapper">
-            <div class="footer-col brand-col">
-                <div class="logo-footer">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3541/3541235.png" alt="Logo">
-                    <span>getren</span>
-                </div>
-                <p>Portal berita terkini yang menyajikan informasi tajam dan rekomendasi produk terbaik.</p>
+        <div class="container footer-content">
+            <div class="footer-left">
+                <p>&copy; 2026 Ngetren All rights reserved.</p>
             </div>
-            <div class="footer-col social-col">
-                <h3>Ikuti Kami</h3>
-                <div class="social-links">
-                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/733/733558.png" alt="Instagram"></a>
-                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/733/733579.png" alt="Twitter"></a>
-                </div>
+            <div class="footer-right">
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/174/174855.png" alt="Instagram" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968958.png" alt="Twitter" /></a>
+                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook" /></a>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Ngetren Media. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // FUNGSI HELPER UPDATE META TAG
-        function updateMetaTag(property, content) {
-            let element = document.querySelector(`meta[property="${property}"]`);
-            if (!element) {
-                element = document.createElement('meta');
-                element.setAttribute('property', property);
-                document.head.appendChild(element);
-            }
-            element.content = content;
-        }
-
-        function updateNameMeta(name, content) {
-            let element = document.querySelector(`meta[name="${name}"]`);
-            if (!element) {
-                element = document.createElement('meta');
-                element.setAttribute('name', name);
-                document.head.appendChild(element);
-            }
-            element.content = content;
-        }
-
-        // FIX BUG BACK BUTTON: Paksa reload total jika kembali dari redirect
-        window.addEventListener('pageshow', function(event) {
+        // =========================================
+        // 1. FIX BUG BACK BUTTON (RELOAD TOTAL)
+        // =========================================
+        window.addEventListener('pageshow', function (event) {
             if (event.persisted) {
                 window.location.reload();
             }
         });
 
+        // =========================================
+        // 2. LOGIKA UTAMA ARTIKEL
+        // =========================================
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug');
-            const isVisited = urlParams.get('visited') === 'true';
 
             if (!slug) {
-                window.location.href = 'index.html';
+                window.location.href = 'home.html';
                 return;
             }
+
+            // Cek apakah user sudah pernah di-redirect di sesi ini
+            const hasRedirected = sessionStorage.getItem('redirected_' + slug);
 
             fetch('data/articles.json')
                 .then(response => response.json())
@@ -147,26 +102,16 @@
                     const article = articles.find(a => a.slug === slug);
 
                     if (article) {
-                        // 1. UPDATE META TAGS UNTUK SHARE
+                        // A. UBAH JUDUL TAB BROWSER (Hanya ini yang JS bisa lakukan)
                         document.title = `${article.title} - Getren News`;
-                        updateMetaTag('og:title', article.title);
-                        updateMetaTag('og:description', article.metadeskripsi || article.title);
-                        updateMetaTag('og:image', article.image); // Gunakan link asli agar FB/WA bisa baca
-                        updateMetaTag('og:url', window.location.href);
-                        updateMetaTag('og:type', 'article');
-                        
-                        updateNameMeta('twitter:card', 'summary_large_image');
-                        updateNameMeta('twitter:title', article.title);
-                        updateNameMeta('twitter:description', article.metadeskripsi || article.title);
-                        updateNameMeta('twitter:image', article.image);
 
-                        // 2. RENDER KONTEN
+                        // B. RENDER KONTEN ARTIKEL KE LAYAR
                         const container = document.getElementById('article-container');
                         container.innerHTML = `
                             <header class="article-header">
-                                <span class="article-category" style="opacity: 0; margin: 0;">${article.category}</span>
+                                <span class="article-category">${article.category}</span>
                                 <h1 class="article-title">${article.title}</h1>
-                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')} <span class="article-category" style="margin-left: 10px;">${article.category}</span></div>
+                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')}</div>
                             </header>
                             
                             <img src="${article.image}" alt="${article.title}" class="article-image">
@@ -192,31 +137,31 @@
                                         <img src="https://cdn-icons-png.flaticon.com/128/18789/18789564.png" alt="Copy">
                                     </button>
                                 </div>
-                         </div>
-
-                            <a href="index.html" class="back-to-home">
-                                <img src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" alt="Back Icon">
-                                Kembali ke Beranda
-                            </a>
+                            </div>
                         `;
 
-                        // 3. LOGIKA REDIRECT
-                        if (!isVisited) {
+                        // C. LOGIKA REDIRECT PINTAR (Hanya sekali per sesi)
+                        if (!hasRedirected) {
                             setTimeout(() => {
-                                const newUrl = `${window.location.pathname}?slug=${slug}&visited=true`;
-                                window.history.replaceState({path: newUrl}, '', newUrl);
+                                sessionStorage.setItem('redirected_' + slug, 'true');
                                 window.location.href = article.affiliate_link;
-                            }, 1000);
+                            }, 2000); // 2 Detik
                         }
-                        
+
                     } else {
-                        window.location.href = 'index.html';
+                        // Jika slug tidak ditemukan, kembali ke home
+                        window.location.href = 'home.html';
                     }
                 })
-                .catch(err => console.error(err));
+                .catch(err => {
+                    console.error('Gagal memuat artikel:', err);
+                    document.getElementById('article-container').innerHTML = '<p>Gagal memuat artikel. Silakan coba lagi.</p>';
+                });
         });
 
-        // FUNGSI SHARE
+        // =========================================
+        // 3. FUNGSI SHARE BUTTON
+        // =========================================
         function getShareUrl() {
             return window.location.origin + window.location.pathname + '?slug=' + new URLSearchParams(window.location.search).get('slug');
         }
@@ -247,5 +192,7 @@
             });
         }
     </script>
+    <script src="js/logic.js"></script> 
 </body>
+
 </html>
