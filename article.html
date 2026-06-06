@@ -9,11 +9,11 @@
     <title>Ngetren News</title>
     <meta name="description" content="Portal berita terkini.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Getren News">
+    <meta property="og:title" content="Ngetren News">
     <meta property="og:description" content="Portal berita terkini.">
-    <meta property="og:image" content="https://ardinurarief.github.io/web-berita-ngetren/news.png">
+    <meta property="og:image" content="https://web-berita-ngetren.vercel.app/news.png">
 
-    <link rel="icon" href="https://ardinurarief.github.io/web-berita-ngetren/news.png" />
+    <link rel="icon" href="https://web-berita-ngetren.vercel.app/news.png" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -189,7 +189,7 @@
         function copyLink() {
             const url = getShareUrl();
             navigator.clipboard.writeText(url).then(() => {
-                alert("✅ Link berhasil disalin!");
+                alert("Link berhasil disalin!");
             }).catch(err => {
                 console.error('Gagal menyalin: ', err);
             });
