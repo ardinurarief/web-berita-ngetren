@@ -106,7 +106,7 @@ function renderHero(headline) {
     const imgUrl = getOptimizedImage(headline.image);
 
     heroSection.innerHTML = `
-        <div class="hero-card" onclick="window.location.href='article.html?slug=${headline.slug}'">
+        <div class="hero-card" onclick="window.location.href='/article?slug=${headline.slug}'">
             <img src="${imgUrl}" alt="${headline.title}">
             <div class="hero-overlay">
                 <span class="hero-category">${headline.category || 'Umum'}</span>
@@ -125,7 +125,7 @@ function updateSidebar(startIndex, count) {
     if (sidebarArticles.length > 0) {
         // PERBAIKAN: Gunakan getOptimizedImage
         sidebarList.innerHTML = sidebarArticles.map(article => `
-            <div class="news-item" onclick="window.location.href='article.html?slug=${article.slug}'">
+            <div class="news-item"  onclick="window.location.href='/article?slug=${article.slug}'">
                 <img src="${getOptimizedImage(article.image)}" alt="${article.title}" class="news-thumb">
                 <div class="news-info">
                     <h3>${article.title}</h3>
@@ -153,7 +153,7 @@ function loadMoreArticles() {
     nextBatch.forEach(article => {
         const item = document.createElement('div');
         item.className = 'news-item';
-        item.onclick = () => window.location.href = `article.html?slug=${article.slug}`;
+        item.onclick = () => window.location.href = `/article?slug=${article.slug}`;
         
         // PERBAIKAN: Gunakan getOptimizedImage
         item.innerHTML = `
@@ -189,7 +189,7 @@ function updateReadAlso(startIndex, count) {
     if (alsoArticles.length > 0) {
         // PERBAIKAN: Gunakan getOptimizedImage
         readAlsoList.innerHTML = alsoArticles.map(article => `
-            <div class="news-item" onclick="window.location.href='article.html?slug=${article.slug}'">
+            <div class="news-item" onclick="window.location.href='/article?slug=${article.slug}'">
                 <img src="${getOptimizedImage(article.image)}" alt="${article.title}" class="news-thumb">
                 <div class="news-info">
                     <h3>${article.title}</h3>
@@ -238,7 +238,7 @@ function setupSearch() {
         } else {
             // PERBAIKAN: Gunakan getOptimizedImage
             newsList.innerHTML = filtered.map(article => `
-                 <div class="news-item" onclick="window.location.href='article.html?slug=${article.slug}'">
+                 <div class="news-item" onclick="window.location.href='/article?slug=${article.slug}'">
                     <img src="${getOptimizedImage(article.image)}" class="news-thumb">
                     <div class="news-info">
                         <span class="news-cat">${article.category}</span>
