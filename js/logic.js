@@ -58,7 +58,7 @@ function checkUrlFilter() {
             filteredArticles.forEach(article => {
                 const item = document.createElement('div');
                 item.className = 'news-item';
-                item.onclick = () => window.location.href = `article.html?slug=${article.slug}`;
+                item.onclick = () => window.location.href = `/article?slug=${article.slug}`;
                 
                 // PERBAIKAN: Gunakan getOptimizedImage
                 item.innerHTML = `
