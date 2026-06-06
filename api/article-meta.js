@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     // Ganti OG Image (Gunakan link asli dari Sheets agar resolusi tinggi)
     html = html.replace(
       /<meta property="og:image" content=".*?">/,
-      `<meta property="og:image" content="${article.image}">`,
+      `<meta property="og:image" content="https://wsrv.nl/?url=${encodeURIComponent(article.image)}&w=800&h=450&fit=cover">`
     );
 
     // Ganti OG Title & Desc
