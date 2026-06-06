@@ -71,30 +71,18 @@
         </div>
     </footer>
 
-    <script>
+        <script>
         // =========================================
-        // 1. FIX BUG BACK BUTTON (RELOAD TOTAL)
-        // =========================================
-        window.addEventListener('pageshow', function (event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        });
-
-        // =========================================
-        // 2. LOGIKA UTAMA ARTIKEL
+        // 1. LOGIKA UTAMA ARTIKEL & REDIRECT PINTAR
         // =========================================
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug');
 
             if (!slug) {
-                window.location.href = 'home.html';
+                window.location.href = 'index.html';
                 return;
             }
-
-            // Cek apakah user sudah pernah di-redirect di sesi ini
-            const hasRedirected = sessionStorage.getItem('redirected_' + slug);
 
             fetch('data/articles.json')
                 .then(response => response.json())
@@ -102,11 +90,10 @@
                     const article = articles.find(a => a.slug === slug);
 
                     if (article) {
-                        // A. UBAH JUDUL TAB BROWSER (Hanya ini yang JS bisa lakukan)
+                        // A. RENDER KONTEN
                         document.title = `${article.title} - Getren News`;
-
-                        // B. RENDER KONTEN ARTIKEL KE LAYAR
                         const container = document.getElementById('article-container');
+                        
                         container.innerHTML = `
                             <header class="article-header">
                                 <span class="article-category">${article.category}</span>
@@ -121,7 +108,7 @@
                             </div>
 
                             <!-- SHARE BUTTONS -->
-                            <div class="share-container">
+                           <div class="share-container">
                                 <h3>Bagikan Berita Ini:</h3>
                                 <div class="share-buttons">
                                     <button class="share-btn wa" onclick="shareToWA()">
@@ -140,27 +127,43 @@
                             </div>
                         `;
 
-                        // C. LOGIKA REDIRECT PINTAR (Hanya sekali per sesi)
-                        if (!hasRedirected) {
-                            setTimeout(() => {
-                                sessionStorage.setItem('redirected_' + slug, 'true');
-                                window.location.href = article.affiliate_link;
-                            }, 2000); // 2 Detik
-                        }
+                        // B. JALANKAN CEK REDIRECT
+                        checkAndRedirect(article);
 
                     } else {
-                        // Jika slug tidak ditemukan, kembali ke home
-                        window.location.href = 'home.html';
+                        window.location.href = 'index.html';
                     }
                 })
-                .catch(err => {
-                    console.error('Gagal memuat artikel:', err);
-                    document.getElementById('article-container').innerHTML = '<p>Gagal memuat artikel. Silakan coba lagi.</p>';
-                });
+                .catch(err => console.error(err));
         });
 
+        // FUNGSI CEK DAN REDIRECT (SILENT MODE)
+        function checkAndRedirect(article) {
+            const slug = article.slug;
+            const now = Date.now();
+            
+            // Ambil waktu redirect terakhir dari penyimpanan browser
+            const lastRedirectTime = localStorage.getItem('last_redirect_' + slug);
+            
+            // Atur batas waktu: 5 Menit (300.000 ms)
+            // Jika belum pernah redirect ATAU sudah lewat 5 menit, maka redirect lagi.
+            // Jika masih di bawah 5 menit, diam saja (user bisa baca).
+            if (!lastRedirectTime || (now - parseInt(lastRedirectTime)) > 300000) {
+                
+                setTimeout(() => {
+                    // Simpan waktu sekarang sebagai tanda sudah redirect
+                    localStorage.setItem('last_redirect_' + slug, now.toString());
+                    
+                    // Eksekusi redirect ke Shopee
+                    window.location.href = article.affiliate_link;
+                }, 3000); // Tunggu 3 detik agar user sempat lihat judul
+            }
+            // Jika kondisi di atas tidak terpenuhi (masih dalam 5 menit), 
+            // maka tidak ada kode yang dijalankan. User bebas membaca.
+        }
+
         // =========================================
-        // 3. FUNGSI SHARE BUTTON
+        // 2. FUNGSI SHARE
         // =========================================
         function getShareUrl() {
             return window.location.origin + window.location.pathname + '?slug=' + new URLSearchParams(window.location.search).get('slug');
