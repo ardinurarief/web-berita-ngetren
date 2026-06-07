@@ -204,26 +204,35 @@ function updateReadAlso(startIndex, count) {
 function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
+    const heroSection = document.getElementById('hero-section'); // Pastikan ID ini ada di HTML
 
     const handleSearch = (e) => {
         const keyword = e.target.value.toLowerCase().trim();
         const newsList = document.getElementById('article-grid');
+        const sidebar = document.querySelector('.sidebar-column'); // Sidebar juga bisa disembunyikan biar makin fokus
 
+        // Jika input kosong, kembalikan tampilan normal
         if (keyword === '') {
             newsList.innerHTML = '';
             displayedCount = 0;
             loadMoreArticles();
-            
-            const hero = document.getElementById('hero-section');
-            const sidebar = document.querySelector('.sidebar-column');
-            if(hero) hero.style.display = 'block';
-            if(sidebar) sidebar.style.display = 'block';
+
+            // MUNCULKAN KEMBALI HERO & SIDEBAR
+            if (heroSection) heroSection.style.display = 'block';
+            if (sidebar) sidebar.style.display = 'block';
 
             updateSidebar(1, 5);
             updateReadAlso(6, 4); 
             return;
         }
 
+        // SEMBUNYIKAN HERO SECTION SAAT MENGETIK
+        if (heroSection) heroSection.style.display = 'none';
+        
+        // Opsional: Sembunyikan sidebar juga agar user fokus 100% ke hasil tengah
+        // if (sidebar) sidebar.style.display = 'none'; 
+
+        // Filter artikel
         const filtered = allArticles.filter(a => 
             a.title.toLowerCase().includes(keyword) || 
             a.category.toLowerCase().includes(keyword)
@@ -233,10 +242,10 @@ function setupSearch() {
             newsList.innerHTML = `
                 <div class="no-result-message">
                     <h3>Artikel Tidak Ditemukan</h3>
+                    <p>Coba kata kunci lain.</p>
                 </div>
             `;
         } else {
-            // PERBAIKAN: Gunakan getOptimizedImage
             newsList.innerHTML = filtered.map(article => `
                  <div class="news-item" onclick="window.location.href='/article?slug=${article.slug}'">
                     <img src="${getOptimizedImage(article.image)}" class="news-thumb">
