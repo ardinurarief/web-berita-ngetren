@@ -453,15 +453,14 @@ img {
     margin-top: 20px;
 } */
 
-    .article-category {
+.article-category {
     display: inline-block;
     background-color: #2196F3; 
     color: #fff;            
     font-family: 'Poppins', sans-serif; 
     font-weight: 700;          
     font-size: 0.85rem;       
-    padding: 4px 10px;         
-    border-radius: 20px;        
+    padding: 4px 8px;            
     text-transform: capitalize; 
     letter-spacing: 0.5px;     
     margin-bottom: 10px;       
