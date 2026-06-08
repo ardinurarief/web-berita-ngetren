@@ -632,28 +632,25 @@ img {
 .share-btn.copy { background-color: #6c757d; }
 
 /* Responsive Mobile */
-/* Responsive Mobile untuk Share Button */
 @media (max-width: 768px) {
     .share-buttons {
         flex-direction: row;
-        justify-content: center; /* Tengah lebih rapi untuk tombol bulat */
-        gap: 10px;
-        padding: 0 10px; /* Beri jarak kiri-kanan agar tidak mepet layar */
+        justify-content: flex-start; /* Rata ke KIRI */
+        gap: 10px;                   /* Jarak antar tombol */
+        padding-left: 0;             /* Mepet ke kiri */
     }
     
     .share-btn {
-        width: 45px;       /* KUNCI: Lebar TETAP (tidak pakai flex: 1) */
-        height: 45px;      /* Tinggi = Lebar agar jadi lingkaran sempurna */
-        padding: 0;        /* Padding harus 0 karena ukuran sudah fix */
-        border-radius: 50%;/* Pastikan 50% untuk bulat sempurna */
-        display: flex;     /* Flexbox untuk menengahkan icon */
+        width: 45px;                 /* Lebar TETAP */
+        height: 45px;                /* Tinggi SAMA DENGAN lebar = Bulat Sempurna */
+        padding: 0;                  /* Padding harus 0 */
+        border-radius: 50%;          /* Wajib 50% untuk lingkaran */
+        display: flex;               /* Flexbox untuk menengahkan icon */
         align-items: center;
         justify-content: center;
-        font-size: 0;      /* Sembunyikan teks jika ada, biar fokus ke icon */
-        flex: none;        /* PENTING: Matikan flex grow/shrink */
+        flex: none;                  /* PENTING: Matikan flex grow/shrink */
     }
 
-    /* Jika ingin icon sedikit lebih besar di mobile */
     .share-btn img {
         width: 20px;
         height: 20px;
