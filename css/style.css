@@ -460,7 +460,8 @@ img {
     font-family: 'Poppins', sans-serif; 
     font-weight: 700;          
     font-size: 0.85rem;       
-    padding: 4px 8px;            
+    padding: 3px 6px; 
+    border-radius: 20px;
     text-transform: capitalize; 
     letter-spacing: 0.5px;     
     margin-bottom: 10px;       
