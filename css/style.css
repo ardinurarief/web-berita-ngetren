@@ -438,8 +438,8 @@ img {
     text-align: left;
 }
 
-/* Label Kategori (Biru ala Bola.com) */
-.article-category {
+/* Label Kategori */
+/* .article-category {
     display: inline-block;
     color: #2196F3;
     border: 1px solid #2196F3;
@@ -451,6 +451,21 @@ img {
     text-transform: uppercase;
     margin-bottom: 10px;
     margin-top: 20px;
+} */
+
+    .article-category {
+    display: inline-block;
+    background-color: #2196F3; /* Warna Biru Solid */
+    color: #000000;            /* Teks Hitam Pekat */
+    font-family: 'Poppins', sans-serif; /* Pastikan font tegas */
+    font-weight: 700;          /* Tebal */
+    font-size: 0.85rem;        /* Ukuran proporsional */
+    padding: 4px 12px;         /* Jarak dalam kotak */
+    border-radius: 4px;        /* Sudut sedikit tumpul */
+    text-transform: uppercase; /* Huruf kapital semua agar rapi */
+    letter-spacing: 0.5px;     /* Jarak antar huruf */
+    margin-bottom: 10px;       /* Jarak ke judul */
+    line-height: 1.4;
 }
 
 /* Judul Artikel Besar */
