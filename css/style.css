@@ -307,6 +307,21 @@ img {
 }
 
 /* News List (Left Column) */
+.news-list {
+    max-height: 2700px; /* Sesuaikan dengan tinggi iklan Shopee */
+    overflow-y: auto;
+    
+    /* Sembunyikan scrollbar untuk Firefox */
+    scrollbar-width: none; 
+    
+    /* Sembunyikan scrollbar untuk Chrome, Edge, Safari */
+    -ms-overflow-style: none;  
+}
+
+.news-list::-webkit-scrollbar {
+    display: none; /* Menyembunyikan scrollbar sepenuhnya */
+}
+
 .news-item {
     display: flex;
     gap: 15px;
