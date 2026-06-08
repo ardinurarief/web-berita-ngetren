@@ -141,7 +141,8 @@ function loadMoreArticles() {
     
     if (!newsList) return;
 
-    const startIdx = 1 + displayedCount; 
+    // Hitung index awal (skip 1 karena index 0 sudah jadi Headline)
+    const startIdx = 1 + displayedCount;
     const endIdx = startIdx + ITEMS_PER_PAGE;
     const nextBatch = allArticles.slice(startIdx, endIdx);
 
@@ -150,12 +151,12 @@ function loadMoreArticles() {
         return;
     }
 
-    nextBatch.forEach(article => {
+    // Render artikel baru
+    nextBatch.forEach((article) => {
         const item = document.createElement('div');
         item.className = 'news-item';
         item.onclick = () => window.location.href = `/article?slug=${article.slug}`;
         
-        // PERBAIKAN: Gunakan getOptimizedImage
         item.innerHTML = `
             <img src="${getOptimizedImage(article.image)}" alt="${article.title}" class="news-thumb">
             <div class="news-info">
@@ -168,6 +169,14 @@ function loadMoreArticles() {
         `;
         newsList.appendChild(item);
     });
+
+    // AUTO SCROLL KE BAWAH SETELAH ARTIKEL BARU DIMUAT
+    setTimeout(() => {
+        newsList.scrollTo({
+            top: newsList.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100);
 
     displayedCount += nextBatch.length;
     updateSidebar(1, 5); 
