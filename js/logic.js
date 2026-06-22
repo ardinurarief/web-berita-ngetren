@@ -11,7 +11,8 @@ function getOptimizedImage(url) {
 
 let allArticles = [];
 let displayedCount = 0;
-const ITEMS_PER_PAGE = 18;
+const ITEMS_PER_PAGE = 19
+    ;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
