@@ -89,7 +89,7 @@ async function loadArticles() {
 
         displayedCount = 0;
         renderHero(allArticles[0]);
-        updateSidebar(1, 5); 
+        updateSidebar(1, 4); 
         updateReadAlso(6, 4); 
         loadMoreArticles(); 
         checkUrlFilter(); 
@@ -230,7 +230,7 @@ function setupSearch() {
             if (heroSection) heroSection.style.display = 'block';
             if (sidebar) sidebar.style.display = 'block';
 
-            updateSidebar(1, 5);
+            updateSidebar(1, 4);
             updateReadAlso(6, 4); 
             return;
         }
