@@ -141,9 +141,6 @@ function loadMoreArticles() {
     
     if (!newsList) return;
 
-    // 1. CATAT TINGGI CONTAINER SEBELUM ARTIKEL BARU DITAMBAHKAN
-    const oldScrollHeight = newsList.scrollHeight;
-
     const startIdx = 1 + displayedCount; 
     const endIdx = startIdx + ITEMS_PER_PAGE;
     const nextBatch = allArticles.slice(startIdx, endIdx);
@@ -153,9 +150,10 @@ function loadMoreArticles() {
         return;
     }
 
+    // Render artikel baru dengan class khusus untuk animasi fade-in
     nextBatch.forEach(article => {
         const item = document.createElement('div');
-        item.className = 'news-item';
+        item.className = 'news-item new-article'; // Tambah class 'new-article'
         item.onclick = () => window.location.href = `/article?slug=${article.slug}`;
         
         item.innerHTML = `
@@ -171,17 +169,8 @@ function loadMoreArticles() {
         newsList.appendChild(item);
     });
 
-    // 2. SCROLL HALUS KE KONTEN BARU (KUNCI PERBAIKAN)
-    setTimeout(() => {
-        const newScrollHeight = newsList.scrollHeight;
-        const addedHeight = newScrollHeight - oldScrollHeight;
-        
-        // Geser scrollbar hanya sejauh tinggi artikel yang baru dimuat
-        newsList.scrollTo({
-            top: newsList.scrollTop + addedHeight,
-            behavior: 'smooth' 
-        });
-    }, 50); // Delay kecil agar DOM selesai dirender
+    // HAPUS BAGIAN scrollTo DI SINI! 
+    // Biarkan scrollbar tetap diam di posisi user saat ini.
 
     displayedCount += nextBatch.length;
     updateSidebar(1, 5); 
