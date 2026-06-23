@@ -11,7 +11,7 @@ function getOptimizedImage(url) {
 
 let allArticles = [];
 let displayedCount = 0;
-const ITEMS_PER_PAGE = 18;
+const ITEMS_PER_PAGE = 19;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadArticles();
@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function filterCategory(category) {
     if (category === 'all') {
-        window.location.href = 'home.html';
+        window.location.href = 'index.html';
     } else {
         const encodedCat = encodeURIComponent(category);
-        window.location.href = `home.html?cat=${encodedCat}`;
+        window.location.href = `index.html?cat=${encodedCat}`;
     }
 }
 
@@ -141,8 +141,7 @@ function loadMoreArticles() {
     
     if (!newsList) return;
 
-    // Hitung index awal (skip 1 karena index 0 sudah jadi Headline)
-    const startIdx = 1 + displayedCount;
+    const startIdx = 1 + displayedCount; 
     const endIdx = startIdx + ITEMS_PER_PAGE;
     const nextBatch = allArticles.slice(startIdx, endIdx);
 
@@ -151,12 +150,12 @@ function loadMoreArticles() {
         return;
     }
 
-    // Render artikel baru
-    nextBatch.forEach((article) => {
+    nextBatch.forEach(article => {
         const item = document.createElement('div');
         item.className = 'news-item';
         item.onclick = () => window.location.href = `/article?slug=${article.slug}`;
         
+        // PERBAIKAN: Gunakan getOptimizedImage
         item.innerHTML = `
             <img src="${getOptimizedImage(article.image)}" alt="${article.title}" class="news-thumb">
             <div class="news-info">
@@ -169,14 +168,6 @@ function loadMoreArticles() {
         `;
         newsList.appendChild(item);
     });
-
-    // AUTO SCROLL KE BAWAH SETELAH ARTIKEL BARU DIMUAT
-    setTimeout(() => {
-        newsList.scrollTo({
-            top: newsList.scrollHeight,
-            behavior: 'smooth'
-        });
-    }, 100);
 
     displayedCount += nextBatch.length;
     updateSidebar(1, 5); 
@@ -213,35 +204,26 @@ function updateReadAlso(startIndex, count) {
 function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
-    const heroSection = document.getElementById('hero-section'); // Pastikan ID ini ada di HTML
 
     const handleSearch = (e) => {
         const keyword = e.target.value.toLowerCase().trim();
         const newsList = document.getElementById('article-grid');
-        const sidebar = document.querySelector('.sidebar-column'); // Sidebar juga bisa disembunyikan biar makin fokus
 
-        // Jika input kosong, kembalikan tampilan normal
         if (keyword === '') {
             newsList.innerHTML = '';
             displayedCount = 0;
             loadMoreArticles();
-
-            // MUNCULKAN KEMBALI HERO & SIDEBAR
-            if (heroSection) heroSection.style.display = 'block';
-            if (sidebar) sidebar.style.display = 'block';
+            
+            const hero = document.getElementById('hero-section');
+            const sidebar = document.querySelector('.sidebar-column');
+            if(hero) hero.style.display = 'block';
+            if(sidebar) sidebar.style.display = 'block';
 
             updateSidebar(1, 5);
             updateReadAlso(6, 4); 
             return;
         }
 
-        // SEMBUNYIKAN HERO SECTION SAAT MENGETIK
-        if (heroSection) heroSection.style.display = 'none';
-        
-        // Opsional: Sembunyikan sidebar juga agar user fokus 100% ke hasil tengah
-        // if (sidebar) sidebar.style.display = 'none'; 
-
-        // Filter artikel
         const filtered = allArticles.filter(a => 
             a.title.toLowerCase().includes(keyword) || 
             a.category.toLowerCase().includes(keyword)
@@ -251,10 +233,10 @@ function setupSearch() {
             newsList.innerHTML = `
                 <div class="no-result-message">
                     <h3>Artikel Tidak Ditemukan</h3>
-                    <p>Coba kata kunci lain.</p>
                 </div>
             `;
         } else {
+            // PERBAIKAN: Gunakan getOptimizedImage
             newsList.innerHTML = filtered.map(article => `
                  <div class="news-item" onclick="window.location.href='/article?slug=${article.slug}'">
                     <img src="${getOptimizedImage(article.image)}" class="news-thumb">
