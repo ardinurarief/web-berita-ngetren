@@ -328,6 +328,23 @@ img {
     display: none; /* Menyembunyikan scrollbar sepenuhnya */
 }
 
+.news-item.new-article {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 .news-item {
     display: flex;
     gap: 15px;
