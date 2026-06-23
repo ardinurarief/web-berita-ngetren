@@ -411,13 +411,12 @@ img {
     background-color: #ffffff;
     color: #2196F3;
     border: 2px solid #2196F3;
-    padding: 12px 30px;
+    padding: 8px 20px;
     font-size: 1rem;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
 }
 
 .btn-load-more:hover {
