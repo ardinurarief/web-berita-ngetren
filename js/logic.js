@@ -150,12 +150,12 @@ function loadMoreArticles() {
         return;
     }
 
-    // Render artikel baru dengan class khusus untuk animasi fade-in
     nextBatch.forEach(article => {
         const item = document.createElement('div');
-        item.className = 'news-item new-article'; // Tambah class 'new-article'
+        item.className = 'news-item';
         item.onclick = () => window.location.href = `/article?slug=${article.slug}`;
         
+        // PERBAIKAN: Gunakan getOptimizedImage
         item.innerHTML = `
             <img src="${getOptimizedImage(article.image)}" alt="${article.title}" class="news-thumb">
             <div class="news-info">
@@ -169,9 +169,6 @@ function loadMoreArticles() {
         newsList.appendChild(item);
     });
 
-    // HAPUS BAGIAN scrollTo DI SINI! 
-    // Biarkan scrollbar tetap diam di posisi user saat ini.
-
     displayedCount += nextBatch.length;
     updateSidebar(1, 5); 
     
@@ -182,28 +179,6 @@ function loadMoreArticles() {
         if(loadMoreBtn) loadMoreBtn.style.display = 'none';
     }
 }
-
-function updateReadAlso(startIndex, count) {
-    const readAlsoList = document.getElementById('read-also-list');
-    if(!readAlsoList) return;
-
-    const alsoArticles = allArticles.slice(startIndex, startIndex + count);
-
-    if (alsoArticles.length > 0) {
-        // PERBAIKAN: Gunakan getOptimizedImage
-        readAlsoList.innerHTML = alsoArticles.map(article => `
-            <div class="news-item" onclick="window.location.href='/article?slug=${article.slug}'">
-                <img src="${getOptimizedImage(article.image)}" alt="${article.title}" class="news-thumb">
-                <div class="news-info">
-                    <h3>${article.title}</h3>
-                </div>
-            </div>
-        `).join('');
-    } else {
-        readAlsoList.innerHTML = '<p class="no-result-message">Sudah tidak ada artikel lain.</p>';
-    }
-}
-
 function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
