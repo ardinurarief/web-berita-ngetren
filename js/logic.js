@@ -204,39 +204,33 @@ function updateReadAlso(startIndex, count) {
 function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
-    const heroSection = document.getElementById('hero-section');
+    const heroSection = document.getElementById('hero-section'); // Pastikan ID ini ada di HTML
 
     const handleSearch = (e) => {
         const keyword = e.target.value.toLowerCase().trim();
         const newsList = document.getElementById('article-grid');
-        const sidebar = document.querySelector('.sidebar-column');
+        const sidebar = document.querySelector('.sidebar-column'); // Sidebar juga bisa disembunyikan biar makin fokus
 
-        // Jika search KOSONG - kembalikan tampilan normal
-if (keyword === '') {
-    newsList.innerHTML = '';
-    displayedCount = 0;
-    
-    // KUNCI: Munculkan kembali tombol load more sebelum render ulang
-    const btn = document.getElementById('load-more-btn');
-    if(btn) btn.style.display = 'block'; 
+        // Jika input kosong, kembalikan tampilan normal
+        if (keyword === '') {
+            newsList.innerHTML = '';
+            displayedCount = 0;
+            loadMoreArticles();
 
-    loadMoreArticles();
-    
-    // TAMPILKAN KEMBALI HERO & SIDEBAR
-    if (heroSection) heroSection.style.display = 'block';
-    if (sidebar) sidebar.style.display = 'block';
+            // MUNCULKAN KEMBALI HERO & SIDEBAR
+            if (heroSection) heroSection.style.display = 'block';
+            if (sidebar) sidebar.style.display = 'block';
 
-    updateSidebar(1, 5);
-    updateReadAlso(6, 4); 
-    return;
-}
+            updateSidebar(1, 5);
+            updateReadAlso(6, 4); 
+            return;
+        }
 
-        // SEMBUNYIKAN HERO SECTION saat user mengetik
+        // SEMBUNYIKAN HERO SECTION SAAT MENGETIK
         if (heroSection) heroSection.style.display = 'none';
         
-        // Opsional: Sembunyikan sidebar juga agar user fokus 100%
-        // Uncomment baris di bawah jika mau sidebar juga hilang
-        // if (sidebar) sidebar.style.display = 'none';
+        // Opsional: Sembunyikan sidebar juga agar user fokus 100% ke hasil tengah
+        // if (sidebar) sidebar.style.display = 'none'; 
 
         // Filter artikel
         const filtered = allArticles.filter(a => 
@@ -263,7 +257,6 @@ if (keyword === '') {
             `).join('');
         }
 
-        // Sembunyikan tombol load more saat search aktif
         const btn = document.getElementById('load-more-btn');
         if(btn) btn.style.display = 'none';
     };
@@ -271,6 +264,7 @@ if (keyword === '') {
     if (searchInput) searchInput.addEventListener('input', handleSearch);
     if (searchInputMobile) searchInputMobile.addEventListener('input', handleSearch);
 }
+
 
 function setupHamburger() {
     const hamburgerBtn = document.getElementById('hamburger-btn');
