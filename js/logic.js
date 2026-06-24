@@ -215,6 +215,10 @@ function setupSearch() {
         if (keyword === '') {
             newsList.innerHTML = '';
             displayedCount = 0;
+
+            const btn = document.getElementById('load-more-btn');
+            if(btn) btn.style.display = 'hidden'; 
+            
             loadMoreArticles();
 
             // MUNCULKAN KEMBALI HERO & SIDEBAR
