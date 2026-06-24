@@ -428,13 +428,12 @@ img {
    ========================================= */
 .load-more-container {
     width: 100%;
+    justify-content: flex-start;
     text-align: center;       
-    padding: 20px 0;          
-    margin-top: auto;         
+    padding: 20px 0;                
 }
 
 .btn-load-more {
-    display: inline-block;
     background-color: #ffffff;
     color: #2196F3;
     border: 2px solid #2196F3;
@@ -445,12 +444,6 @@ img {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.btn-load-more.hidden {
-    visibility: hidden;       
-    opacity: 0;
-    pointer-events: none;
 }
 
 .btn-load-more:hover {
