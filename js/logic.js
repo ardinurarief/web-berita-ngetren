@@ -146,7 +146,7 @@ function loadMoreArticles() {
     const nextBatch = allArticles.slice(startIdx, endIdx);
 
     if (nextBatch.length === 0) {
-        if(loadMoreBtn) loadMoreBtn.style.display = 'none'; 
+        if(loadMoreBtn) loadMoreBtn.classList.add('hidden');
         return;
     }
 
@@ -217,7 +217,7 @@ function setupSearch() {
             displayedCount = 0;
 
             const btn = document.getElementById('load-more-btn');
-            if(btn) btn.style.display = 'none'; 
+            if(btn) btn.classList.remove('hidden'); // Muncul lagi di posisi center yang sama
             
             loadMoreArticles();
 
