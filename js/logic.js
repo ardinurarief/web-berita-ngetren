@@ -217,7 +217,7 @@ function setupSearch() {
             displayedCount = 0;
 
             const btn = document.getElementById('load-more-btn');
-            if(btn) btn.style.display = 'hidden'; 
+            if(btn) btn.style.display = 'none'; 
             
             loadMoreArticles();
 
