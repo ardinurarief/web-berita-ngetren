@@ -217,8 +217,12 @@ if (keyword === '') {
     displayedCount = 0;
     
     // KUNCI: Munculkan kembali tombol load more sebelum render ulang
-    const btn = document.getElementById('load-more-btn');
-    if(btn) btn.style.display = 'block'; 
+const btn = document.getElementById('load-more-btn');
+if (btn) {
+  btn.style.display = 'block';       
+  btn.style.margin = '20px auto';    
+  btn.style.textAlign = 'center';    
+} 
 
     loadMoreArticles();
     
