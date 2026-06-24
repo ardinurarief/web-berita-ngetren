@@ -98,16 +98,17 @@
                             <header class="article-header">
                                 <span class="article-category">${article.category}</span>
                                 <h1 class="article-title">${article.title}</h1>
-                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')} <div class="ai-written-badge">
-    <img src="https://cdn-icons-png.flaticon.com/128/17653/17653338.png" alt="AI Icon" width="16" height="16">
-    <span>Ditulis oleh AI</span>
-</div></div>
+                                <div class="article-meta">Dipublikasikan: ${new Date(article.date).toLocaleDateString('id-ID')}</div>
                             </header>
                             
                             <img src="${article.image}" alt="${article.title}" class="article-image">
                             
                             <div class="article-content">
                                 ${article.content}
+                            </div>
+
+                            <div class="ai-written-badge">
+                            <span>Ditulis oleh AI</span>
                             </div>
 
                             <!-- SHARE BUTTONS -->
