@@ -445,7 +445,6 @@ img {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 0 auto;
 }
 
 .btn-load-more.hidden {
