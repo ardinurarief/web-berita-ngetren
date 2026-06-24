@@ -523,23 +523,11 @@ img {
     font-weight: 600;
 }
 
-/* Pastikan gambar tidak gepeng */
-.ai-written-badge img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-    flex-shrink: 0;
-}
-
 @media (max-width: 768px) {
     .ai-written-badge {
         font-size: 0.7rem;
         padding: 3px 8px;
         margin-top: 8px;
-    }
-    .ai-written-badge img {
-        width: 14px;
-        height: 14px;
     }
 }
 
