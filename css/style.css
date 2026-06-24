@@ -427,12 +427,14 @@ img {
    LOAD MORE BUTTON
    ========================================= */
 .load-more-container {
-    text-align: center;
-    margin-top: 30px;
-    padding-bottom: 40px;
+    width: 100%;
+    text-align: center;       
+    padding: 20px 0;          
+    margin-top: auto;         
 }
 
 .btn-load-more {
+    display: inline-block;
     background-color: #ffffff;
     color: #2196F3;
     border: 2px solid #2196F3;
@@ -443,6 +445,13 @@ img {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin: 0 auto;
+}
+
+.btn-load-more.hidden {
+    visibility: hidden;       
+    opacity: 0;
+    pointer-events: none;
 }
 
 .btn-load-more:hover {
