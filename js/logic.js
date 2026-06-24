@@ -212,19 +212,24 @@ function setupSearch() {
         const sidebar = document.querySelector('.sidebar-column');
 
         // Jika search KOSONG - kembalikan tampilan normal
-        if (keyword === '') {
-            newsList.innerHTML = '';
-            displayedCount = 0;
-            loadMoreArticles();
-            
-            // TAMPILKAN KEMBALI HERO & SIDEBAR
-            if (heroSection) heroSection.style.display = 'block';
-            if (sidebar) sidebar.style.display = 'block';
+if (keyword === '') {
+    newsList.innerHTML = '';
+    displayedCount = 0;
+    
+    // KUNCI: Munculkan kembali tombol load more sebelum render ulang
+    const btn = document.getElementById('load-more-btn');
+    if(btn) btn.style.display = 'block'; 
 
-            updateSidebar(1, 5);
-            updateReadAlso(6, 4); 
-            return;
-        }
+    loadMoreArticles();
+    
+    // TAMPILKAN KEMBALI HERO & SIDEBAR
+    if (heroSection) heroSection.style.display = 'block';
+    if (sidebar) sidebar.style.display = 'block';
+
+    updateSidebar(1, 5);
+    updateReadAlso(6, 4); 
+    return;
+}
 
         // SEMBUNYIKAN HERO SECTION saat user mengetik
         if (heroSection) heroSection.style.display = 'none';
