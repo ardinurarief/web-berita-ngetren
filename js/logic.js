@@ -205,34 +205,31 @@ function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
     const heroSection = document.getElementById('hero-section'); // Pastikan ID ini ada di HTML
-    const btn = document.getElementById('load-more-btn');
 
     const handleSearch = (e) => {
         const keyword = e.target.value.toLowerCase().trim();
         const newsList = document.getElementById('article-grid');
         const sidebar = document.querySelector('.sidebar-column'); // Sidebar juga bisa disembunyikan biar makin fokus
 
-        // Jika input kosong, kembalikan tampilan normal
-        if (keyword === '') {
-            // RESET TOTAL SAAT SEARCH KOSONG
-            newsList.innerHTML = '';
-            displayedCount = 0;
-            
-            // KUNCI: Hapus class hidden DAN pastikan display benar
-            if(btn) {
-                btn.classList.remove('is-hidden');
-                btn.style.display = 'inline-block'; // Paksa kembali ke inline-block
-            }
+        // Jika search KOSONG - kembalikan tampilan normal
+if (keyword === '') {
+    newsList.innerHTML = '';
+    displayedCount = 0;
+    
+    // KUNCI: Munculkan kembali tombol load more sebelum render ulang
+    const btn = document.getElementById('load-more-btn');
+    if(btn) btn.style.display = 'block'; 
 
-            loadMoreArticles();
-            
-            if (heroSection) heroSection.style.display = 'block';
-            if (sidebar) sidebar.style.display = 'block';
+    loadMoreArticles();
+    
+    // TAMPILKAN KEMBALI HERO & SIDEBAR
+    if (heroSection) heroSection.style.display = 'block';
+    if (sidebar) sidebar.style.display = 'block';
 
-            updateSidebar(1, 5);
-            updateReadAlso(6, 4); 
-            return;
-        }
+    updateSidebar(1, 5);
+    updateReadAlso(6, 4); 
+    return;
+}
 
 
         // SEMBUNYIKAN HERO SECTION SAAT MENGETIK
