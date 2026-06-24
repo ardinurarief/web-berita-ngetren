@@ -205,6 +205,7 @@ function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchInputMobile = document.getElementById('search-input-mobile');
     const heroSection = document.getElementById('hero-section'); // Pastikan ID ini ada di HTML
+    const btn = document.getElementById('load-more-btn');
 
     const handleSearch = (e) => {
         const keyword = e.target.value.toLowerCase().trim();
@@ -213,15 +214,18 @@ function setupSearch() {
 
         // Jika input kosong, kembalikan tampilan normal
         if (keyword === '') {
+            // RESET TOTAL SAAT SEARCH KOSONG
             newsList.innerHTML = '';
             displayedCount = 0;
-
-            const btn = document.getElementById('load-more-btn');
-            if(btn) btn.classList.remove('hidden'); // Muncul lagi di posisi center yang sama
             
-            loadMoreArticles();
+            // KUNCI: Hapus class hidden DAN pastikan display benar
+            if(btn) {
+                btn.classList.remove('is-hidden');
+                btn.style.display = 'inline-block'; // Paksa kembali ke inline-block
+            }
 
-            // MUNCULKAN KEMBALI HERO & SIDEBAR
+            loadMoreArticles();
+            
             if (heroSection) heroSection.style.display = 'block';
             if (sidebar) sidebar.style.display = 'block';
 
@@ -229,6 +233,7 @@ function setupSearch() {
             updateReadAlso(6, 4); 
             return;
         }
+
 
         // SEMBUNYIKAN HERO SECTION SAAT MENGETIK
         if (heroSection) heroSection.style.display = 'none';
