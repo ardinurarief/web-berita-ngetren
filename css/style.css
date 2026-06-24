@@ -517,11 +517,9 @@ img {
     gap: 6px;
     margin-top: 10px;
     padding: 4px 12px;
-    background-color: #f0f7ff;
-    color: #0066cc;
-    border: 1px solid #cce0ff;
-    border-radius: 20px;
+    color: #d3d3d3;
     font-size: 0.75rem;
+    font-family: var(--font-subtitle);
     font-weight: 600;
 }
 
